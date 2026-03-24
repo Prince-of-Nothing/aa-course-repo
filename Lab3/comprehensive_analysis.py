@@ -1,31 +1,16 @@
-"""
-Comprehensive Analysis of DFS and BFS Algorithms
-Laboratory Work 3: Empirical Analysis of Graph Traversal Algorithms
-
-This script performs empirical analysis of DFS and BFS algorithms by:
-1. Testing on various graph sizes
-2. Testing on different graph types (sparse, dense, tree, etc.)
-3. Measuring execution time and memory usage
-4. Comparing algorithmic performance
-"""
-
-import time
+﻿import time
 import tracemalloc
 import pandas as pd
 import sys
 from collections import defaultdict, deque
 
-# Increase recursion limit for deep graphs
 sys.setrecursionlimit(50000)
 
-
-# ===============================
-# GRAPH CLASS (unified for analysis)
-# ===============================
+TRIALS_PER_CONFIGURATION = 100
+DENSITY_PERCENTAGES = list(range(0, 101, 5))
+DENSITY_MATRIX_SIZES = [100, 500, 1000, 2000, 5000]
 
 class Graph:
-    """Graph class using adjacency list representation"""
-
     def __init__(self, directed=False):
         self.graph = defaultdict(list)
         self.directed = directed
@@ -50,13 +35,7 @@ class Graph:
             count //= 2
         return count
 
-
-# ===============================
-# DFS AND BFS IMPLEMENTATIONS
-# ===============================
-
 def dfs_iterative(graph, start):
-    """DFS using iterative approach with explicit stack"""
     visited = set()
     stack = [start]
     traversal_order = []
@@ -72,9 +51,7 @@ def dfs_iterative(graph, start):
 
     return traversal_order
 
-
 def dfs_recursive(graph, start):
-    """DFS using recursive approach"""
     visited = set()
     traversal_order = []
 
@@ -88,9 +65,7 @@ def dfs_recursive(graph, start):
     dfs_helper(start)
     return traversal_order
 
-
 def bfs(graph, start):
-    """BFS using queue"""
     visited = set()
     queue = deque([start])
     visited.add(start)
@@ -106,16 +81,9 @@ def bfs(graph, start):
 
     return traversal_order
 
-
-# ===============================
-# GRAPH GENERATORS
-# ===============================
-
 import random
 
-
 def generate_random_graph(num_vertices, edge_probability=0.3, directed=False):
-    """Generate random graph using Erdos-Renyi model"""
     g = Graph(directed=directed)
     for i in range(num_vertices):
         g.add_vertex(i)
@@ -125,9 +93,7 @@ def generate_random_graph(num_vertices, edge_probability=0.3, directed=False):
                 g.add_edge(i, j)
     return g
 
-
 def generate_sparse_graph(num_vertices, directed=False):
-    """Generate sparse graph (approximately n edges)"""
     g = Graph(directed=directed)
     for i in range(num_vertices):
         g.add_vertex(i)
@@ -142,14 +108,10 @@ def generate_sparse_graph(num_vertices, directed=False):
             g.add_edge(u, v)
     return g
 
-
 def generate_dense_graph(num_vertices, density=0.7, directed=False):
-    """Generate dense graph with high edge probability"""
     return generate_random_graph(num_vertices, edge_probability=density, directed=directed)
 
-
 def generate_complete_graph(num_vertices, directed=False):
-    """Generate complete graph"""
     g = Graph(directed=directed)
     for i in range(num_vertices):
         g.add_vertex(i)
@@ -158,9 +120,7 @@ def generate_complete_graph(num_vertices, directed=False):
             g.add_edge(i, j)
     return g
 
-
 def generate_tree(num_vertices):
-    """Generate random tree"""
     g = Graph(directed=False)
     for i in range(num_vertices):
         g.add_vertex(i)
@@ -169,9 +129,45 @@ def generate_tree(num_vertices):
         g.add_edge(parent, i)
     return g
 
+def generate_graph_with_additional_links(num_vertices, additional_ratio):
+    if not (0.0 <= additional_ratio <= 1.0):
+        raise ValueError("additional_ratio must be between 0 and 1")
+
+    g = Graph(directed=False)
+    for i in range(num_vertices):
+        g.add_vertex(i)
+
+    existing_edges = set()
+
+    for i in range(1, num_vertices):
+        parent = random.randint(0, i - 1)
+        u, v = (parent, i) if parent < i else (i, parent)
+        existing_edges.add((u, v))
+        g.add_edge(u, v)
+
+    max_additional = (num_vertices - 1) * (num_vertices - 2) // 2
+    target_additional = int(round(additional_ratio * max_additional))
+
+    added = 0
+    while added < target_additional:
+        u = random.randrange(num_vertices)
+        v = random.randrange(num_vertices - 1)
+        if v >= u:
+            v += 1
+        if u > v:
+            u, v = v, u
+
+        edge = (u, v)
+        if edge in existing_edges:
+            continue
+
+        existing_edges.add(edge)
+        g.add_edge(u, v)
+        added += 1
+
+    return g
 
 def generate_binary_tree(depth):
-    """Generate complete binary tree"""
     g = Graph(directed=False)
     num_vertices = (2 ** (depth + 1)) - 1
     for i in range(num_vertices):
@@ -185,9 +181,7 @@ def generate_binary_tree(depth):
             g.add_edge(i, right_child)
     return g
 
-
 def generate_linear_graph(num_vertices, directed=False):
-    """Generate linear path graph"""
     g = Graph(directed=directed)
     for i in range(num_vertices):
         g.add_vertex(i)
@@ -195,9 +189,7 @@ def generate_linear_graph(num_vertices, directed=False):
         g.add_edge(i, i + 1)
     return g
 
-
 def generate_grid_graph(size, directed=False):
-    """Generate grid graph"""
     g = Graph(directed=directed)
     rows = cols = size
     for i in range(rows * cols):
@@ -211,13 +203,7 @@ def generate_grid_graph(size, directed=False):
                 g.add_edge(vertex, vertex + cols)
     return g
 
-
-# ===============================
-# BENCHMARK FUNCTIONS
-# ===============================
-
 def benchmark_algorithm(algorithm, graph, start_vertex, algorithm_name):
-    """Benchmark a single algorithm and return metrics"""
     tracemalloc.start()
 
     start_time = time.perf_counter()
@@ -243,14 +229,11 @@ def benchmark_algorithm(algorithm, graph, start_vertex, algorithm_name):
         'success': success
     }
 
-
 def run_size_analysis():
-    """Run analysis with different graph sizes"""
     print("\n" + "=" * 70)
     print("SCALABILITY ANALYSIS: Graph Size Impact")
     print("=" * 70)
 
-    # Sizes to test (vertices)
     sizes = [100, 500, 1000, 2000, 5000, 10000]
     results = []
 
@@ -263,7 +246,6 @@ def run_size_analysis():
     for size in sizes:
         print(f"\nTesting with {size} vertices...")
 
-        # Generate graph with moderate density
         graph = generate_random_graph(size, edge_probability=0.1)
         edges = graph.get_edges_count()
         start_vertex = 0
@@ -271,21 +253,28 @@ def run_size_analysis():
         print(f"  Graph: {size} vertices, {edges} edges")
 
         for algo_name, algo_func in algorithms.items():
-            result = benchmark_algorithm(algo_func, graph, start_vertex, algo_name)
-            result['nodes'] = size
-            result['edges'] = edges
-            result['graph_type'] = 'Random (p=0.1)'
-            results.append(result)
+            trial_results = []
+            for trial in range(1, TRIALS_PER_CONFIGURATION + 1):
+                result = benchmark_algorithm(algo_func, graph, start_vertex, algo_name)
+                result['nodes'] = size
+                result['edges'] = edges
+                result['graph_type'] = 'Random (p=0.1)'
+                result['trial'] = trial
+                results.append(result)
+                trial_results.append(result)
 
-            status = "OK" if result['success'] else "FAILED"
-            print(f"  {algo_name:15}: {result['execution_time_ms']:.3f} ms, "
-                  f"{result['peak_memory_kb']:.1f} KB [{status}]")
+            successful_trials = [r for r in trial_results if r['success']]
+            if successful_trials:
+                median_time = pd.Series([r['execution_time_ms'] for r in successful_trials]).median()
+                median_memory = pd.Series([r['peak_memory_kb'] for r in successful_trials]).median()
+                print(f"  {algo_name:15}: median {median_time:.3f} ms, "
+                      f"median {median_memory:.1f} KB over {len(successful_trials)} trials")
+            else:
+                print(f"  {algo_name:15}: all trials FAILED")
 
     return results
 
-
 def run_graph_type_analysis():
-    """Run analysis with different graph types"""
     print("\n" + "=" * 70)
     print("GRAPH TYPE ANALYSIS: Different Graph Structures")
     print("=" * 70)
@@ -298,8 +287,8 @@ def run_graph_type_analysis():
         ('Dense (p=0.5)', lambda: generate_dense_graph(fixed_size, 0.5)),
         ('Tree', lambda: generate_tree(fixed_size)),
         ('Linear/Path', lambda: generate_linear_graph(fixed_size)),
-        ('Grid (45x45)', lambda: generate_grid_graph(45)),  # ~2025 vertices
-        ('Binary Tree (d=10)', lambda: generate_binary_tree(10)),  # 2047 vertices
+        ('Grid (45x45)', lambda: generate_grid_graph(45)),
+        ('Binary Tree (d=10)', lambda: generate_binary_tree(10)),
     ]
 
     algorithms = {
@@ -319,67 +308,99 @@ def run_graph_type_analysis():
         print(f"  Structure: {vertices} vertices, {edges} edges")
 
         for algo_name, algo_func in algorithms.items():
-            result = benchmark_algorithm(algo_func, graph, start_vertex, algo_name)
-            result['nodes'] = vertices
-            result['edges'] = edges
-            result['graph_type'] = graph_name
-            results.append(result)
+            trial_results = []
+            for trial in range(1, TRIALS_PER_CONFIGURATION + 1):
+                result = benchmark_algorithm(algo_func, graph, start_vertex, algo_name)
+                result['nodes'] = vertices
+                result['edges'] = edges
+                result['graph_type'] = graph_name
+                result['trial'] = trial
+                results.append(result)
+                trial_results.append(result)
 
-            status = "OK" if result['success'] else "FAILED"
-            print(f"  {algo_name:15}: {result['execution_time_ms']:.3f} ms, "
-                  f"{result['peak_memory_kb']:.1f} KB [{status}]")
+            successful_trials = [r for r in trial_results if r['success']]
+            if successful_trials:
+                median_time = pd.Series([r['execution_time_ms'] for r in successful_trials]).median()
+                median_memory = pd.Series([r['peak_memory_kb'] for r in successful_trials]).median()
+                print(f"  {algo_name:15}: median {median_time:.3f} ms, "
+                      f"median {median_memory:.1f} KB over {len(successful_trials)} trials")
+            else:
+                print(f"  {algo_name:15}: all trials FAILED")
 
     return results
 
+def calculate_target_edges_for_density(num_vertices, density_percent):
+    if not (0 <= density_percent <= 100):
+        raise ValueError("density_percent must be in [0, 100]")
 
-def run_edge_density_analysis():
-    """Run analysis with varying edge densities"""
+    if num_vertices <= 1:
+        return 0
+
+    min_edges = num_vertices - 1
+    max_edges = num_vertices * (num_vertices - 1) // 2
+    return min_edges + int(round((density_percent / 100.0) * (max_edges - min_edges)))
+
+def run_density_matrix_analysis():
     print("\n" + "=" * 70)
-    print("EDGE DENSITY ANALYSIS: Sparse to Dense Graphs")
+    print("DENSITY MATRIX ANALYSIS: 0% to 100% (5% Steps)")
+    print("0% => n-1 edges, 100% => n(n-1)/2 edges")
     print("=" * 70)
 
     results = []
-    fixed_size = 1500
-    densities = [0.01, 0.05, 0.1, 0.2, 0.3, 0.5]
 
     algorithms = {
         'DFS_Iterative': dfs_iterative,
         'BFS': bfs
     }
 
-    for density in densities:
-        print(f"\nTesting with edge probability {density}...")
+    for size in DENSITY_MATRIX_SIZES:
+        print(f"\nVertex size: {size}")
+        for percent in DENSITY_PERCENTAGES:
+            ratio = percent / 100.0
+            expected_edges = calculate_target_edges_for_density(size, percent)
 
-        graph = generate_random_graph(fixed_size, edge_probability=density)
-        vertices = graph.get_vertices_count()
-        edges = graph.get_edges_count()
-        start_vertex = 0
+            graph = generate_graph_with_additional_links(size, ratio)
+            vertices = graph.get_vertices_count()
+            edges = graph.get_edges_count()
+            start_vertex = 0
 
-        print(f"  Graph: {vertices} vertices, {edges} edges")
+            if edges != expected_edges:
+                print(f"  Warning: expected {expected_edges} edges at {percent}%, generated {edges}")
 
-        for algo_name, algo_func in algorithms.items():
-            result = benchmark_algorithm(algo_func, graph, start_vertex, algo_name)
-            result['nodes'] = vertices
-            result['edges'] = edges
-            result['edge_density'] = density
-            result['graph_type'] = f'Random (p={density})'
-            results.append(result)
+            print(f"  Density {percent:3d}%: {vertices} vertices, {edges} edges")
 
-            print(f"  {algo_name:15}: {result['execution_time_ms']:.3f} ms, "
-                  f"{result['peak_memory_kb']:.1f} KB")
+            for algo_name, algo_func in algorithms.items():
+                trial_results = []
+                for trial in range(1, TRIALS_PER_CONFIGURATION + 1):
+                    result = benchmark_algorithm(algo_func, graph, start_vertex, algo_name)
+                    result['nodes'] = vertices
+                    result['edges'] = edges
+                    result['density_percent'] = percent
+                    result['density_ratio'] = ratio
+                    result['density_target_edges'] = expected_edges
+                    result['graph_type'] = f'Density Matrix ({percent}%)'
+                    result['trial'] = trial
+                    results.append(result)
+                    trial_results.append(result)
+
+                successful_trials = [r for r in trial_results if r['success']]
+                if successful_trials:
+                    median_time = pd.Series([r['execution_time_ms'] for r in successful_trials]).median()
+                    median_memory = pd.Series([r['peak_memory_kb'] for r in successful_trials]).median()
+                    print(f"    {algo_name:15}: median {median_time:.3f} ms, "
+                          f"median {median_memory:.1f} KB over {len(successful_trials)} trials")
+                else:
+                    print(f"    {algo_name:15}: all trials FAILED")
 
     return results
 
-
 def generate_summary_report(all_results):
-    """Generate comprehensive summary report"""
     print("\n" + "=" * 70)
     print("COMPREHENSIVE ANALYSIS SUMMARY")
     print("=" * 70)
 
     df = pd.DataFrame(all_results)
 
-    # Filter successful runs
     successful = df[df['success'] == True]
 
     print("\n1. ALGORITHM PERFORMANCE OVERVIEW")
@@ -407,7 +428,6 @@ def generate_summary_report(all_results):
     print("\n3. SCALABILITY INSIGHTS")
     print("-" * 50)
 
-    # Compare DFS vs BFS scaling
     dfs_data = successful[successful['algorithm'] == 'DFS_Iterative']
     bfs_data = successful[successful['algorithm'] == 'BFS']
 
@@ -426,31 +446,22 @@ def generate_summary_report(all_results):
 
     return df
 
-
 def save_results(df, filename='performance_data.csv'):
-    """Save results to CSV file"""
     output_path = f'c:\\Users\\Unknown\\Documents\\Repos\\aa-course-repo\\Lab3\\{filename}'
     df.to_csv(output_path, index=False)
     print(f"\nResults saved to: {output_path}")
 
-
 def main():
-    """Main function to run comprehensive analysis"""
     print("=" * 70)
     print("LABORATORY WORK 3: DFS vs BFS Empirical Analysis")
     print("=" * 70)
 
     all_results = []
 
-    # Run different analyses
     all_results.extend(run_size_analysis())
     all_results.extend(run_graph_type_analysis())
-    all_results.extend(run_edge_density_analysis())
-
-    # Generate report
+    all_results.extend(run_density_matrix_analysis())
     results_df = generate_summary_report(all_results)
-
-    # Save results
     save_results(results_df)
 
     print("\n" + "=" * 70)
@@ -459,6 +470,6 @@ def main():
     print("Run 'python plot_results.py' to generate visualizations")
     print("=" * 70)
 
-
 if __name__ == "__main__":
     main()
+

@@ -41,6 +41,7 @@ The analysis is performed against graphs with the following properties:
 
 ### Graph Sizes (Vertices)
 - 100, 500, 1000, 2000, 5000, 10000 vertices
+- Density matrix sizes: 100, 500, 1000, 2000, 5000
 
 ### Graph Types
 1. **Sparse Graph**: ~n edges for n vertices
@@ -51,7 +52,11 @@ The analysis is performed against graphs with the following properties:
 6. **Binary Tree**: Complete binary tree structure
 
 ### Edge Densities
-- 0.01, 0.05, 0.1, 0.2, 0.3, 0.5
+- 0%, 5%, 10%, ..., 100% (step 5%)
+- Density mapping for each vertex count n:
+	- 0% corresponds to n-1 edges (connected tree baseline)
+	- 100% corresponds to n(n-1)/2 edges (complete graph)
+	- Intermediate levels use linear scaling between these two bounds
 
 ## Metrics for Comparison
 
@@ -59,6 +64,7 @@ The analysis is performed against graphs with the following properties:
 2. **Peak Memory Usage (KB)**: Measured using `tracemalloc`
 3. **Vertices Visited**: Number of vertices successfully traversed
 4. **Success Rate**: Whether the algorithm completed without errors
+5. **Trials per Configuration**: 100 runs per algorithm and configuration (median reported)
 
 ## How to Run
 
@@ -70,7 +76,7 @@ python comprehensive_analysis.py
 This will:
 - Test DFS and BFS on various graph sizes
 - Test different graph structures
-- Test varying edge densities
+- Test a size x density matrix using the 0%-to-100% edge mapping rule
 - Generate `performance_data.csv`
 
 ### 2. Generate Visualizations
