@@ -40,8 +40,7 @@ Lab3/
 The analysis is performed against graphs with the following properties:
 
 ### Graph Sizes (Vertices)
-- 100, 500, 1000, 2000, 5000, 10000 vertices
-- Density matrix sizes: 100, 500, 1000, 2000, 5000
+- Density sweep sizes: 100 evenly spaced vertex counts from 2 to 1000 (inclusive)
 
 ### Graph Types
 1. **Sparse Graph**: ~n edges for n vertices
@@ -64,7 +63,7 @@ The analysis is performed against graphs with the following properties:
 2. **Peak Memory Usage (KB)**: Measured using `tracemalloc`
 3. **Vertices Visited**: Number of vertices successfully traversed
 4. **Success Rate**: Whether the algorithm completed without errors
-5. **Trials per Configuration**: 100 runs per algorithm and configuration (median reported)
+5. **Trials per Configuration**: 20 runs per algorithm and configuration (median reported)
 
 ## How to Run
 
@@ -74,9 +73,9 @@ cd Lab3
 python comprehensive_analysis.py
 ```
 This will:
-- Test DFS and BFS on various graph sizes
-- Test different graph structures
-- Test a size x density matrix using the 0%-to-100% edge mapping rule
+- Run a density-only size x density matrix benchmark using the 0%-to-100% edge mapping rule
+- Use stepped sizes from 2 to 1000 to keep runtime practical
+- Show per-size progress with elapsed time and ETA in the terminal
 - Generate `performance_data.csv`
 
 ### 2. Generate Visualizations

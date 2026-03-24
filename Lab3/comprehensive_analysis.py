@@ -6,9 +6,23 @@ from collections import defaultdict, deque
 
 sys.setrecursionlimit(50000)
 
-TRIALS_PER_CONFIGURATION = 100
 DENSITY_PERCENTAGES = list(range(0, 101, 5))
-DENSITY_MATRIX_SIZES = [100, 500, 1000, 2000, 5000]
+TRIALS_PER_CONFIGURATION = 20
+MIN_VERTEX_COUNT = 2
+MAX_VERTEX_COUNT = 1000
+DENSITY_SIZE_COUNT = 100
+
+def generate_density_sizes(min_vertices, max_vertices, count):
+    if count <= 1:
+        return [max_vertices]
+
+    sizes = [
+        min_vertices + (i * (max_vertices - min_vertices)) // (count - 1)
+        for i in range(count)
+    ]
+    return sorted(set(sizes))
+
+DENSITY_MATRIX_SIZES = generate_density_sizes(MIN_VERTEX_COUNT, MAX_VERTEX_COUNT, DENSITY_SIZE_COUNT)
 
 class Graph:
     def __init__(self, directed=False):
@@ -340,6 +354,15 @@ def calculate_target_edges_for_density(num_vertices, density_percent):
     max_edges = num_vertices * (num_vertices - 1) // 2
     return min_edges + int(round((density_percent / 100.0) * (max_edges - min_edges)))
 
+def format_eta(seconds):
+    total_seconds = max(0, int(round(seconds)))
+    hours, remainder = divmod(total_seconds, 3600)
+    minutes, secs = divmod(remainder, 60)
+
+    if hours > 0:
+        return f"{hours:02d}:{minutes:02d}:{secs:02d}"
+    return f"{minutes:02d}:{secs:02d}"
+
 def run_density_matrix_analysis():
     print("\n" + "=" * 70)
     print("DENSITY MATRIX ANALYSIS: 0% to 100% (5% Steps)")
@@ -353,8 +376,12 @@ def run_density_matrix_analysis():
         'BFS': bfs
     }
 
-    for size in DENSITY_MATRIX_SIZES:
-        print(f"\nVertex size: {size}")
+    total_sizes = len(DENSITY_MATRIX_SIZES)
+    analysis_start = time.perf_counter()
+
+    for size_index, size in enumerate(DENSITY_MATRIX_SIZES, start=1):
+        size_start = time.perf_counter()
+        print(f"\nVertex size {size_index}/{total_sizes}: {size}")
         for percent in DENSITY_PERCENTAGES:
             ratio = percent / 100.0
             expected_edges = calculate_target_edges_for_density(size, percent)
@@ -391,6 +418,19 @@ def run_density_matrix_analysis():
                           f"median {median_memory:.1f} KB over {len(successful_trials)} trials")
                 else:
                     print(f"    {algo_name:15}: all trials FAILED")
+
+        size_elapsed = time.perf_counter() - size_start
+        elapsed_total = time.perf_counter() - analysis_start
+        avg_per_size = elapsed_total / size_index
+        remaining_sizes = total_sizes - size_index
+        eta_seconds = avg_per_size * remaining_sizes
+        progress_percent = (size_index / total_sizes) * 100
+
+        print(
+            f"  Progress: {size_index}/{total_sizes} sizes "
+            f"({progress_percent:.1f}%) | size elapsed {format_eta(size_elapsed)} "
+            f"| total elapsed {format_eta(elapsed_total)} | ETA {format_eta(eta_seconds)}"
+        )
 
     return results
 
@@ -458,8 +498,6 @@ def main():
 
     all_results = []
 
-    all_results.extend(run_size_analysis())
-    all_results.extend(run_graph_type_analysis())
     all_results.extend(run_density_matrix_analysis())
     results_df = generate_summary_report(all_results)
     save_results(results_df)
