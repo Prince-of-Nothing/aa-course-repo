@@ -35,6 +35,24 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
     # Filter successful runs only
     data = data[data['success'] == True]
 
+    # Use comparable subsets for fair visual analysis.
+    # - Size scalability: random graphs with fixed probability p=0.1
+    # - Density analysis: random graphs at fixed node count with varying density
+    # - Graph type comparison: structural generators only
+    size_data = data[data['graph_type'] == 'Random (p=0.1)']
+    density_data = data[data['graph_type'].str.startswith('Random (p=')]
+    if 'edge_density' in density_data.columns:
+        density_data = density_data[density_data['edge_density'].notna()]
+    main_type_labels = [
+        'Sparse',
+        'Dense (p=0.5)',
+        'Tree',
+        'Linear/Path',
+        'Grid (45x45)',
+        'Binary Tree (d=10)'
+    ]
+    type_data = data[data['graph_type'].isin(main_type_labels)]
+
     # Set style
     plt.style.use('seaborn-v0_8-whitegrid')
     colors = {'DFS_Iterative': '#3498db', 'DFS_Recursive': '#9b59b6', 'BFS': '#2ecc71'}
@@ -45,7 +63,7 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
     plt.figure(figsize=(10, 6))
 
     for algo in ['DFS_Iterative', 'DFS_Recursive']:
-        algo_data = data[data['algorithm'] == algo]
+        algo_data = size_data[size_data['algorithm'] == algo]
         if not algo_data.empty:
             # Group by nodes and calculate mean
             grouped = algo_data.groupby('nodes')['execution_time_ms'].mean().reset_index()
@@ -70,7 +88,7 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
     # ========================================
     plt.figure(figsize=(10, 6))
 
-    bfs_data = data[data['algorithm'] == 'BFS']
+    bfs_data = size_data[size_data['algorithm'] == 'BFS']
     if not bfs_data.empty:
         grouped = bfs_data.groupby('nodes')['execution_time_ms'].mean().reset_index()
         grouped = grouped.sort_values('nodes')
@@ -95,7 +113,7 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
     plt.figure(figsize=(10, 6))
 
     for algo in ['DFS_Iterative', 'BFS']:
-        algo_data = data[data['algorithm'] == algo]
+        algo_data = size_data[size_data['algorithm'] == algo]
         if not algo_data.empty:
             grouped = algo_data.groupby('nodes')['execution_time_ms'].mean().reset_index()
             grouped = grouped.sort_values('nodes')
@@ -121,7 +139,7 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
     plt.figure(figsize=(10, 6))
 
     for algo in ['DFS_Iterative', 'BFS']:
-        algo_data = data[data['algorithm'] == algo]
+        algo_data = density_data[density_data['algorithm'] == algo]
         if not algo_data.empty:
             grouped = algo_data.groupby('edges')['execution_time_ms'].mean().reset_index()
             grouped = grouped.sort_values('edges')
@@ -147,7 +165,7 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
     plt.figure(figsize=(10, 6))
 
     for algo in ['DFS_Iterative', 'BFS', 'DFS_Recursive']:
-        algo_data = data[data['algorithm'] == algo]
+        algo_data = size_data[size_data['algorithm'] == algo]
         if not algo_data.empty:
             grouped = algo_data.groupby('nodes')['peak_memory_kb'].mean().reset_index()
             grouped = grouped.sort_values('nodes')
@@ -171,12 +189,6 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
     # Plot 6: Performance by Graph Type (Bar Chart)
     # ========================================
     plt.figure(figsize=(12, 6))
-
-    graph_types = data['graph_type'].unique()
-    # Filter to main graph types (exclude density variations)
-    main_types = [t for t in graph_types if 'Random (p=' not in t or t == 'Random (p=0.1)']
-
-    type_data = data[data['graph_type'].isin(main_types)]
 
     if not type_data.empty:
         pivot_data = type_data.pivot_table(
@@ -210,7 +222,7 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
     # Subplot 1: Time vs Nodes
     ax1 = fig.add_subplot(2, 2, 1)
     for algo in ['DFS_Iterative', 'BFS']:
-        algo_data = data[data['algorithm'] == algo]
+        algo_data = size_data[size_data['algorithm'] == algo]
         if not algo_data.empty:
             grouped = algo_data.groupby('nodes')['execution_time_ms'].mean().reset_index()
             grouped = grouped.sort_values('nodes')
@@ -226,7 +238,7 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
     # Subplot 2: Time vs Edges
     ax2 = fig.add_subplot(2, 2, 2)
     for algo in ['DFS_Iterative', 'BFS']:
-        algo_data = data[data['algorithm'] == algo]
+        algo_data = density_data[density_data['algorithm'] == algo]
         if not algo_data.empty:
             grouped = algo_data.groupby('edges')['execution_time_ms'].mean().reset_index()
             grouped = grouped.sort_values('edges')
@@ -242,7 +254,7 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
     # Subplot 3: Memory Usage
     ax3 = fig.add_subplot(2, 2, 3)
     for algo in ['DFS_Iterative', 'BFS']:
-        algo_data = data[data['algorithm'] == algo]
+        algo_data = size_data[size_data['algorithm'] == algo]
         if not algo_data.empty:
             grouped = algo_data.groupby('nodes')['peak_memory_kb'].mean().reset_index()
             grouped = grouped.sort_values('nodes')
@@ -287,31 +299,13 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
     print(f"\nAll plots successfully saved to the '{output_path}' directory.")
 
 
-def create_dummy_data():
-    """Create dummy data for demonstration if real data doesn't exist"""
-    dummy_data = {
-        'algorithm': ['DFS_Iterative', 'BFS'] * 6,
-        'nodes': [100, 100, 500, 500, 1000, 1000, 2000, 2000, 5000, 5000, 10000, 10000],
-        'edges': [450, 450, 12500, 12500, 50000, 50000, 200000, 200000, 1250000, 1250000, 5000000, 5000000],
-        'execution_time_ms': [0.5, 0.6, 2.5, 3.0, 5.0, 6.0, 12.0, 14.0, 35.0, 40.0, 80.0, 95.0],
-        'peak_memory_kb': [50, 55, 250, 280, 500, 550, 1000, 1100, 2500, 2800, 5000, 5500],
-        'vertices_visited': [100, 100, 500, 500, 1000, 1000, 2000, 2000, 5000, 5000, 10000, 10000],
-        'success': [True] * 12,
-        'graph_type': ['Random (p=0.1)'] * 12
-    }
-    return pd.DataFrame(dummy_data)
-
-
 if __name__ == '__main__':
     base_path = 'c:\\Users\\Unknown\\Documents\\Repos\\aa-course-repo\\Lab3'
     csv_path = os.path.join(base_path, 'performance_data.csv')
 
     if not os.path.exists(csv_path):
-        print("Warning: 'performance_data.csv' not found.")
-        print("Creating dummy data for plotting demonstration.")
-        print("For actual results, please run 'comprehensive_analysis.py' first.")
-        dummy_df = create_dummy_data()
-        dummy_df.to_csv(csv_path, index=False)
-        print(f"Dummy data saved to {csv_path}")
+        print("Error: 'performance_data.csv' not found.")
+        print("Run 'python comprehensive_analysis.py' first to generate empirical data.")
+        raise SystemExit(1)
 
     plot_performance()
