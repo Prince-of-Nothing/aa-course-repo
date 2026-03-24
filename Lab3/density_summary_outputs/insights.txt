@@ -1,0 +1,15 @@
+DENSITY SUMMARY INSIGHTS
+============================================================
+
+Faster algorithm by density level:
+- BFS: 21 density levels
+
+Typical speed ratio (median): 2.335x
+Best speed ratio observed: 2.692x
+
+Lower-memory algorithm by density level:
+- BFS: 20 density levels
+- DFS_Iterative: 1 density levels
+
+Typical memory ratio (median): 12.881x
+Best memory ratio observed: 25.254x
