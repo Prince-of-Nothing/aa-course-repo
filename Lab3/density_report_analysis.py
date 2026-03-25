@@ -100,44 +100,70 @@ def plot_bfs_dfs_for_each_density(density_df, out_dir):
             plt.close()
 
 
-def plot_median_behavior_vs_density(density_df, out_dir):
+def plot_median_behavior_vs_nodes(density_df, out_dir):
+    """Plot median behavior vs number of nodes (median taken across densities)"""
     colors = {"DFS_Iterative": "#1f77b4", "BFS": "#2ca02c"}
     markers = {"DFS_Iterative": "o", "BFS": "s"}
 
     for metric, ylabel, out_name in [
-        ("execution_time_ms", "Median Execution Time (ms)", "median_behavior_time_vs_density.png"),
-        ("peak_memory_kb", "Median Peak Memory (KB)", "median_behavior_memory_vs_density.png"),
+        ("execution_time_ms", "Median Execution Time (ms)", "median_behavior_time_vs_nodes.png"),
+        ("peak_memory_kb", "Median Peak Memory (KB)", "median_behavior_memory_vs_nodes.png"),
     ]:
+        # Group by nodes and algorithm, then take median across densities
         grouped = (
-            density_df.groupby(["density_percent", "algorithm"])[metric]
-            .median()
+            density_df.groupby(["nodes", "algorithm"])[metric]
+            .agg(["min", "median", "max"])
             .reset_index()
         )
 
         plt.figure(figsize=(10, 6))
 
         for algo in ["DFS_Iterative", "BFS"]:
-            algo_data = grouped[grouped["algorithm"] == algo].sort_values("density_percent")
+            algo_data = grouped[grouped["algorithm"] == algo].sort_values("nodes")
             if algo_data.empty:
                 continue
 
             plt.plot(
-                algo_data["density_percent"],
-                algo_data[metric],
+                algo_data["nodes"],
+                algo_data["median"],
                 marker=markers[algo],
                 linewidth=2.4,
                 color=colors[algo],
                 label=f"{algo} median",
             )
 
-        plt.title(f"{ylabel} vs Density")
-        plt.xlabel("Density (%)")
+            plt.plot(
+                algo_data["nodes"],
+                algo_data["min"],
+                linestyle="--",
+                linewidth=1.8,
+                color=colors[algo],
+                alpha=0.75,
+                label=f"{algo} best case",
+            )
+
+            plt.plot(
+                algo_data["nodes"],
+                algo_data["max"],
+                linestyle=":",
+                linewidth=2.0,
+                color=colors[algo],
+                alpha=0.85,
+                label=f"{algo} worst case",
+            )
+
+        plt.xlabel("Number of Nodes")
         plt.ylabel(ylabel)
-        plt.grid(True, linestyle="--", alpha=0.6)
+        plt.title(f"Algorithm Performance vs Number of Nodes\n(Median across all densities)")
         plt.legend()
+        plt.grid(True, alpha=0.3)
         plt.tight_layout()
-        plt.savefig(os.path.join(out_dir, out_name), dpi=150)
+
+        out_path = os.path.join(out_dir, out_name)
+        plt.savefig(out_path, dpi=200, bbox_inches="tight")
         plt.close()
+        print(f"Saved: {out_path}")
+
 
 
 def build_summary_tables(density_df, tables_dir):
@@ -269,7 +295,7 @@ def main():
     out_dir, per_density_dir, median_dir, tables_dir = ensure_output_dirs(base_dir)
 
     plot_bfs_dfs_for_each_density(density_df, per_density_dir)
-    plot_median_behavior_vs_density(density_df, median_dir)
+    plot_median_behavior_vs_nodes(density_df, median_dir)
     speed_median, memory_median = build_summary_tables(density_df, tables_dir)
     write_insights(speed_median, memory_median, out_dir)
 
