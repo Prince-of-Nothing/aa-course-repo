@@ -1,0 +1,178 @@
+\documentclass[12pt,a4paper]{article}
+\newcommand{\reportTitle}{Laboratory work 4:}
+\newcommand{\reportSubject}{Study and Empirical Analysis of\\[0.3cm]Dijkstra and Floyd--Warshall Shortest Path Algorithms}
+\input{common_report.tex}
+
+\startreport
+
+\reportprelimsection{LIST OF ABBREVIATIONS AND DEFINITIONS}
+\begin{itemize}
+    \item dense graph - graph with a high number of edges compared with the maximum possible number;
+    \item Dijkstra - single-source shortest-path algorithm for graphs with non-negative weights;
+    \item DP - Dynamic Programming;
+    \item Floyd--Warshall - dynamic-programming algorithm for all-pairs shortest paths;
+    \item KB - kilobytes;
+    \item ms - milliseconds;
+    \item sparse graph - graph with a relatively low number of edges.
+\end{itemize}
+
+\reportintroduction
+Shortest-path algorithms are used to determine minimum-cost paths in weighted graphs. Dijkstra computes the distances from one source vertex to all other reachable vertices, while Floyd--Warshall computes the shortest paths between all pairs of vertices.
+
+These two algorithms are appropriate for empirical comparison because they solve related problems, but rely on different algorithmic strategies. The laboratory therefore studies not only the graph size, but also the effect of sparse and dense structures on the practical performance of the implementations.
+
+\reportmainsection{ALGORITHM ANALYSIS}
+
+\reportlabel{Objective}
+Study and analyze Dijkstra and Floyd--Warshall on weighted directed graphs with different sizes and densities.
+
+\reportlabel{Tasks}
+\begin{enumerate}[leftmargin=1.25cm]
+    \item study the dynamic-programming method of designing algorithms;
+    \item implement Dijkstra and Floyd--Warshall in a programming language;
+    \item perform empirical analysis for sparse and dense graphs;
+    \item increase the number of nodes and analyze the influence on the algorithms;
+    \item make a graphical presentation of the obtained data;
+    \item formulate conclusions.
+\end{enumerate}
+
+\reportlabel{Theoretical Notes}
+Empirical analysis is useful when the intention is to observe the practical behavior of algorithms on real inputs and to compare implementations under the same execution environment. In the present laboratory, Dijkstra is used for the single-source shortest-path problem, while Floyd--Warshall is used for the all-pairs shortest-path problem \cite{gfg-dp,tp-dp}.
+
+Dijkstra is expected to scale much better on large graphs, especially when an efficient priority queue is used. Floyd--Warshall is based on a dynamic-programming recurrence and has cubic time complexity, which makes it practical only for substantially smaller graphs \cite{cn}.
+
+\reportlabel{Comparison Metric}
+The selected metrics were:
+\begin{itemize}[leftmargin=1.25cm]
+    \item execution time in milliseconds;
+    \item peak memory usage in kilobytes;
+    \item number of reachable distances;
+    \item number of edges and graph density.
+\end{itemize}
+
+\reportlabel{Input Format}
+The benchmark used weighted directed graphs with positive integer weights from 1 to 20. Three graph categories were generated:
+\begin{itemize}[leftmargin=1.25cm]
+    \item sparse graphs;
+    \item medium-density graphs;
+    \item dense graphs.
+\end{itemize}
+
+For Dijkstra, the tested sizes were 100, 250, 500, 1000, and 1500 nodes. For Floyd--Warshall, the tested sizes were 25, 50, 75, 100, and 125 nodes.
+
+\reportmainsection{IMPLEMENTATION}
+
+\tocsubsection{Dijkstra}
+The project contains a classic Dijkstra implementation and an optimized implementation based on a priority queue. Both were benchmarked on the same generated weighted graphs \cite{repo}.
+
+\reportlabel{Algorithm Description}
+
+The method follows the idea shown in the next pseudocode.
+
+\begin{lstlisting}
+Dijkstra(graph, source):
+    set distance[source] = 0
+    set all other distances to infinity
+    while there are unprocessed vertices:
+        choose the vertex with minimum distance
+        relax all outgoing edges from that vertex
+    return distance array
+\end{lstlisting}
+
+\reportlabel{Implementation}
+
+The optimized version replaces repeated linear minimum selection with a heap-based priority queue. This modification increases auxiliary memory usage, but reduces running time significantly on large inputs.
+
+\reportlabel{Results}
+
+After running Dijkstra for each graph size defined in the dataset specifications and recording execution time and memory usage, the representative results are shown in Table~\ref{tab:lab4-dijkstra}.
+
+\begin{table}[H]
+    \caption{Dijkstra benchmark at 1500 nodes}
+    \label{tab:lab4-dijkstra}
+    \centering
+    {\fontsize{11}{11}\selectfont\renewcommand{\arraystretch}{1}\input{generated/lab4_dijkstra_table.tex}}
+\end{table}
+
+In Table~\ref{tab:lab4-dijkstra} it can be observed that the optimized implementation is substantially faster than the classic one. On the dense graph with 1500 nodes and 1461720 edges, the classic version required \(4562.149\) ms, while the optimized version required only \(226.503\) ms. This difference is represented graphically in Figure~\ref{fig:lab4-dijkstra}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth]{../../Lab4/plots/dijkstra_sparse_dense_performance.png}
+    \caption{Dijkstra performance on sparse and dense graphs}
+    \label{fig:lab4-dijkstra}
+\end{figure}
+
+Figure~\ref{fig:lab4-dijkstra} shows clearly that the difference between the two implementations grows as the number of nodes increases. The logarithmic scale is needed because the gap becomes very large on the bigger graphs.
+
+\reportlabel{Conclusion}
+
+Dijkstra is well suited for large weighted graphs when shortest paths from a single source are required. The priority-queue-based version offers a decisive improvement in performance, especially on larger sparse and dense instances.
+
+\tocsubsection{Floyd--Warshall}
+The project also contains a classic and an optimized Floyd--Warshall implementation. Both solve the all-pairs shortest-path problem and were benchmarked on the same weighted graph categories.
+
+\reportlabel{Algorithm Description}
+
+The Floyd--Warshall method follows the recurrence shown in the next pseudocode.
+
+\begin{lstlisting}
+FloydWarshall(matrix):
+    dist = matrix copy
+    for k from 1 to n:
+        for i from 1 to n:
+            for j from 1 to n:
+                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+    return dist
+\end{lstlisting}
+
+\reportlabel{Implementation}
+
+The optimized version attempts to skip unnecessary updates when intermediate states are not useful. In Python, however, the effect is smaller than for Dijkstra because the algorithm remains cubic and interpreter overhead stays significant.
+
+\reportlabel{Results}
+
+After executing Floyd--Warshall for each graph size from the second input range, the representative values are shown in Table~\ref{tab:lab4-floyd}.
+
+\begin{table}[H]
+    \caption{Floyd--Warshall benchmark at 125 nodes}
+    \label{tab:lab4-floyd}
+    \centering
+    {\fontsize{11}{11}\selectfont\renewcommand{\arraystretch}{1}\input{generated/lab4_floyd_table.tex}}
+\end{table}
+
+In Table~\ref{tab:lab4-floyd} it can be observed that the difference between the classic and optimized Floyd--Warshall variants is not as dramatic as for Dijkstra. On dense graphs, the classic version remained faster, while on sparse graphs the optimized version produced a small improvement. The corresponding graph is shown in Figure~\ref{fig:lab4-floyd}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth]{../../Lab4/plots/floyd_warshall_sparse_dense_performance.png}
+    \caption{Floyd--Warshall performance on sparse and dense graphs}
+    \label{fig:lab4-floyd}
+\end{figure}
+
+The graph in Figure~\ref{fig:lab4-floyd} illustrates the strong growth of running time relative to the number of nodes. Even though the tested node counts are much smaller than for Dijkstra, the increase is already significant because of the cubic complexity of the method.
+
+\reportlabel{Conclusion}
+
+Floyd--Warshall remains useful when all-pairs shortest paths are required, but the empirical data confirms that it becomes expensive quickly as the number of nodes increases. The optimized implementation offers only moderate gains in Python.
+
+\reportunnumberedsection{CONCLUSION}
+The experiments confirm that graph density and graph size strongly influence shortest-path algorithms. Dijkstra is much more scalable for single-source queries, especially in its optimized implementation, while Floyd--Warshall remains suitable only for relatively small all-pairs problems.
+
+The sparse-versus-dense comparison was particularly informative. Dense graphs increased the workload for both methods, but the optimized Dijkstra implementation still maintained a large performance advantage. Overall, the empirical results agree well with the theoretical expectations and provide a clear practical comparison between the two algorithms.
+
+\reportreferences{
+\bibitem{gfg-dp}
+GeeksforGeeks. \textit{Dynamic Programming} [online]. [cited 07.05.2026]. Available: \href{https://www.geeksforgeeks.org/dynamic-programming/}{geeksforgeeks.org/dynamic-programming}.
+
+\bibitem{tp-dp}
+TutorialsPoint. \textit{Dynamic Programming} [online]. [cited 07.05.2026]. Available: \href{https://www.tutorialspoint.com/data_structures_algorithms/dynamic_programming.htm}{tutorialspoint.com/data\_structures\_algorithms/dynamic\_programming.htm}.
+
+\bibitem{cn}
+Coding Ninjas. \textit{Dijkstra's Algorithm vs Floyd--Warshall's Algorithm} [online]. [cited 07.05.2026]. Available: \href{https://www.codingninjas.com/codestudio/library/dijkstras-algorithm-vs-floydwarshalls-algorithm}{codingninjas.com/codestudio/library/dijkstras-algorithm-vs-floydwarshalls-algorithm}.
+
+\bibitem{repo}
+GitHub Repository. \textit{Lab 4 source folder} [online]. [cited 07.05.2026]. Available: \href{https://github.com/Prince-of-Nothing/aa-course-repo/tree/main/Lab4}{github.com/Prince-of-Nothing/aa-course-repo/tree/main/Lab4}.
+}
+
+\end{document}

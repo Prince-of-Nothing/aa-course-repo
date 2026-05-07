@@ -1,0 +1,226 @@
+\usepackage{iftex}
+\ifPDFTeX
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{mathptmx}
+    \usepackage{courier}
+\else
+    \usepackage{fontspec}
+    \setmainfont{Times New Roman}
+    \setmonofont{Courier New}
+\fi
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[english]{babel}
+\usepackage{indentfirst}
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=20mm,
+    right=10mm,
+    top=20mm,
+    bottom=20mm
+}
+
+\usepackage{setspace}
+\setstretch{1.5}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+
+\usepackage{titlesec}
+\titleformat{\section}
+  {\normalfont\bfseries\centering\fontsize{13}{15}\selectfont\MakeUppercase}{\thesection}{0.8em}{}
+\titleformat{\subsection}
+  {\normalfont\bfseries\fontsize{12}{14}\selectfont}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}
+  {\normalfont\bfseries\fontsize{12}{14}\selectfont}{\thesubsubsection}{0.8em}{}
+
+\titlespacing*{\section}{0pt}{0pt}{0.8\baselineskip}
+\titlespacing*{\subsection}{0pt}{0.6\baselineskip}{0.3\baselineskip}
+\titlespacing*{\subsubsection}{0pt}{0.4\baselineskip}{0.2\baselineskip}
+
+\setcounter{secnumdepth}{3}
+
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{chngcntr}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{needspace}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tocloft}
+
+\setlist[itemize]{label=--,leftmargin=1.25cm,itemsep=0pt,topsep=0pt}
+\setlist[enumerate]{leftmargin=1.25cm,itemsep=0pt,topsep=0pt}
+
+\renewcommand{\cftsecleader}{\cftdotfill{1}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{1}}
+\renewcommand{\cftsubsubsecleader}{\cftdotfill{1}}
+\setlength{\cftbeforesecskip}{0pt}
+\setlength{\cftbeforesubsecskip}{0pt}
+\setlength{\cftbeforesubsubsecskip}{0pt}
+\setlength{\cftsecindent}{0pt}
+\setlength{\cftsubsecindent}{0.5cm}
+\setlength{\cftsubsubsecindent}{1cm}
+\setlength{\cftsecnumwidth}{1.0cm}
+\setlength{\cftsubsecnumwidth}{1.0cm}
+\setlength{\cftsubsubsecnumwidth}{1.2cm}
+\renewcommand{\cftsecfont}{\bfseries}
+\renewcommand{\cftsubsecfont}{\normalfont}
+\renewcommand{\cftsecpagefont}{\bfseries}
+\renewcommand{\cftsubsecpagefont}{\normalfont}
+\renewcommand{\cfttoctitlefont}{\hfill\normalfont\Large\bfseries}
+\renewcommand{\cftaftertoctitle}{\hfill}
+\setcounter{tocdepth}{2}
+
+\usepackage{hyperref}
+\usepackage{bookmark}
+\hypersetup{
+    hidelinks,
+    linktoc=all
+}
+\addto\captionsenglish{\renewcommand{\contentsname}{TABLE OF CONTENTS}}
+\renewcommand{\contentsname}{TABLE OF CONTENTS}
+
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+\counterwithin{equation}{section}
+
+\newcommand{\reportcodestyle}{\linespread{1}\ttfamily\fontsize{10}{10}\selectfont}
+
+\lstset{
+    basicstyle=\reportcodestyle,
+    frame=none,
+    breaklines=true,
+    columns=fullflexible,
+    keepspaces=true,
+    showstringspaces=false,
+    aboveskip=0.2\baselineskip,
+    belowskip=0.2\baselineskip
+}
+
+\captionsetup[figure]{
+    font=bf,
+    labelfont=bf,
+    textfont=bf,
+    labelsep=endash,
+    justification=centering,
+    singlelinecheck=false
+}
+\captionsetup[table]{
+    font=normalfont,
+    labelfont=normalfont,
+    textfont=normalfont,
+    labelsep=endash,
+    justification=raggedleft,
+    singlelinecheck=false,
+    position=above
+}
+
+\newcommand{\studentName}{Ple\c{s}u Dinu}
+\newcommand{\studentGroup}{FAF-241}
+\newcommand{\teacherTitle}{asist. univ.}
+\newcommand{\teacherName}{Fi\c{s}tic Cristofor}
+\newcommand{\reportYear}{2026}
+\newcommand{\reportCity}{Chi\c{s}in\u{a}u}
+
+\newcommand{\makelabtitle}{
+    \begin{titlepage}
+        \centering
+
+        \textbf{\large Ministerul Educa\c{t}iei \c{s}i Cercet\u{a}rii al Republicii Moldova}\\[0.3cm]
+        \textbf{\large Universitatea Tehnic\u{a} a Moldovei}\\[0.3cm]
+        \textbf{\large Facultatea Calculatoare, Informatic\u{a} \c{s}i Microelectronic\u{a}}\\[3cm]
+
+        \vfill
+
+        {\LARGE \reportTitle}\\[0.5cm]
+        {\LARGE \reportSubject}\\[3cm]
+
+        \vfill
+
+        \begin{flushleft}
+            \hspace{1cm}
+            \begin{minipage}{0.8\textwidth}
+                {\large Elaborated:}\\
+                {\large st.\ gr.\ \studentGroup \hfill \studentName}\\[0.8cm]
+                {\large Verified:}\\
+                {\large \teacherTitle \hfill \teacherName}\\
+            \end{minipage}
+        \end{flushleft}
+
+        \vfill
+
+        {\large \reportCity\ - \reportYear}
+    \end{titlepage}
+}
+
+\newcommand{\startreport}{
+    \begin{document}
+    \makelabtitle
+    \newpage
+    \pagenumbering{arabic}
+    \setcounter{page}{2}
+    \thispagestyle{empty}
+    \tableofcontents
+    \thispagestyle{empty}
+    \newpage
+}
+
+\newcommand{\reportprelimsection}[1]{
+    \newpage
+    \section*{#1}
+    \thispagestyle{empty}
+    \phantomsection
+    \addcontentsline{toc}{section}{#1}
+}
+
+\newcommand{\reportintroduction}{
+    \newpage
+    \section*{INTRODUCTION}
+    \phantomsection
+    \addcontentsline{toc}{section}{INTRODUCTION}
+}
+
+\newcommand{\reportmainsection}[1]{
+    \newpage
+    \section{#1}
+}
+
+\newcommand{\tocsubsection}[1]{
+    \Needspace{12\baselineskip}
+    \subsection{#1}
+}
+
+\newcommand{\reportlabel}[1]{
+    \Needspace{6\baselineskip}
+    \par\noindent\textbf{#1}\par
+}
+
+\newcommand{\reportfrontsubsection}[1]{
+    \subsection*{#1}
+    \phantomsection
+    \addcontentsline{toc}{subsection}{#1}
+}
+
+\newcommand{\reportunnumberedsection}[1]{
+    \newpage
+    \section*{#1}
+    \phantomsection
+    \addcontentsline{toc}{section}{#1}
+}
+
+\newcommand{\reportreferences}[1]{
+    \newpage
+    \section*{REFERENCES}
+    \phantomsection
+    \addcontentsline{toc}{section}{REFERENCES}
+    \begin{thebibliography}{99}
+    #1
+    \end{thebibliography}
+}

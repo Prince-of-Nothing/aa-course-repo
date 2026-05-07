@@ -1,0 +1,180 @@
+\documentclass[12pt,a4paper]{article}
+\newcommand{\reportTitle}{Laboratory work 5:}
+\newcommand{\reportSubject}{Study and Empirical Analysis of\\[0.3cm]Prim and Kruskal Greedy Algorithms}
+\input{common_report.tex}
+
+\startreport
+
+\reportprelimsection{LIST OF ABBREVIATIONS AND DEFINITIONS}
+\begin{itemize}
+    \item greedy algorithm - method that builds a solution by choosing the best local option at each step;
+    \item KB - kilobytes;
+    \item Kruskal - greedy algorithm that constructs a minimum spanning tree by selecting edges in increasing order;
+    \item ms - milliseconds;
+    \item MST - Minimum Spanning Tree;
+    \item Prim - greedy algorithm that grows a minimum spanning tree from an initial vertex.
+\end{itemize}
+
+\reportintroduction
+Prim and Kruskal are classical greedy algorithms for constructing a minimum spanning tree in a connected weighted graph. Both aim to connect all vertices with minimum total weight, but they do so using different strategies.
+
+Prim grows one tree progressively, while Kruskal builds the solution by choosing edges in increasing order and avoiding cycles. Because both algorithms solve the same problem, they are appropriate for empirical comparison on graphs with different sizes and densities.
+
+\reportmainsection{ALGORITHM ANALYSIS}
+
+\reportlabel{Objective}
+Study and analyze Prim and Kruskal on connected weighted undirected graphs with increasing size and different density.
+
+\reportlabel{Tasks}
+\begin{enumerate}[leftmargin=1.25cm]
+    \item study the greedy algorithm design technique;
+    \item implement Prim and Kruskal in a programming language;
+    \item perform empirical analysis of the two algorithms;
+    \item increase the number of nodes in the graph and analyze the influence on the algorithms;
+    \item make a graphical presentation of the obtained data;
+    \item formulate conclusions.
+\end{enumerate}
+
+\reportlabel{Theoretical Notes}
+Greedy algorithms build a solution step by step by selecting the best local option available at the current moment. For the minimum spanning tree problem, Prim expands a partial tree by adding the cheapest possible outgoing edge, while Kruskal sorts the edges and adds them one by one as long as no cycle is formed \cite{gfg-greedy,tp-greedy}.
+
+The practical performance of these algorithms depends strongly on the internal data structures. Heap-based edge selection improves Prim, while an efficient disjoint-set structure improves Kruskal \cite{scaler}.
+
+\reportlabel{Comparison Metric}
+The selected metrics were:
+\begin{itemize}[leftmargin=1.25cm]
+    \item execution time in milliseconds;
+    \item peak memory usage in kilobytes;
+    \item total weight of the minimum spanning tree;
+    \item number of edges and graph density.
+\end{itemize}
+
+\reportlabel{Input Format}
+The benchmark used connected weighted undirected graphs with random edge weights from 1 to 20. Three graph categories were generated:
+\begin{itemize}[leftmargin=1.25cm]
+    \item sparse graphs;
+    \item medium-density graphs;
+    \item dense graphs.
+\end{itemize}
+
+The tested graph sizes were 100, 200, 350, 500, and 700 vertices.
+
+\reportmainsection{IMPLEMENTATION}
+
+\tocsubsection{Prim}
+The project contains a classic Prim implementation and an optimized Prim implementation. The optimized variant uses a priority queue to select the next cheapest edge more efficiently \cite{repo}.
+
+\reportlabel{Algorithm Description}
+
+The method follows the idea shown in the next pseudocode.
+
+\begin{lstlisting}
+Prim(graph, start):
+    mark start as part of the tree
+    push all outgoing edges of start in priority queue
+    while the queue is not empty:
+        extract the cheapest edge
+        if it reaches an unvisited vertex:
+            add that edge to the tree
+            add outgoing edges of the new vertex to the queue
+    return minimum spanning tree
+\end{lstlisting}
+
+\reportlabel{Implementation}
+
+The classic version keeps a simpler selection process, while the optimized version uses a more suitable heap-based approach. This improves execution time, but increases auxiliary memory usage.
+
+\reportlabel{Results}
+
+After executing the Prim implementations on all graph sizes and graph types, the representative values for the largest dense graph are shown in Table~\ref{tab:lab5-dense}.
+
+\begin{table}[H]
+    \caption{MST benchmark on dense graphs at 700 nodes}
+    \label{tab:lab5-dense}
+    \centering
+    {\fontsize{11}{11}\selectfont\renewcommand{\arraystretch}{1}\input{generated/lab5_dense_table.tex}}
+\end{table}
+
+In Table~\ref{tab:lab5-dense} it can be observed that the optimized Prim variant achieved the best running time among all implementations on the dense graph, with \(435.592\) ms. At the same time, it required the largest memory usage, which shows the trade-off introduced by the optimization. The overall MST performance is represented in Figure~\ref{fig:lab5-main}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth]{../../Lab5/plots/mst_performance.png}
+    \caption{Overall MST performance}
+    \label{fig:lab5-main}
+\end{figure}
+
+Figure~\ref{fig:lab5-main} shows the strong increase in execution time as the number of nodes grows. The growth is especially visible for the classic Prim variant.
+
+\reportlabel{Conclusion}
+
+Prim is effective for minimum spanning tree construction, but its practical performance depends heavily on the data structure used for edge selection. The optimized version is clearly preferable for large graphs when execution time is the main priority.
+
+\tocsubsection{Kruskal}
+The project also contains a classic and an optimized Kruskal implementation. The optimized variant uses a disjoint-set structure to detect cycles efficiently.
+
+\reportlabel{Algorithm Description}
+
+The Kruskal method follows the idea shown in the next pseudocode.
+
+\begin{lstlisting}
+Kruskal(graph):
+    sort all edges increasingly by weight
+    make one component for each vertex
+    for each edge in sorted order:
+        if the two endpoints are in different components:
+            add edge to the tree
+            merge the two components
+    return minimum spanning tree
+\end{lstlisting}
+
+\reportlabel{Implementation}
+
+The optimized version uses faster component management through union-find operations. This reduces both running time and memory compared with the simpler component-merging approach of the classic version.
+
+\reportlabel{Results}
+
+After the execution of Kruskal on sparse, medium, and dense graphs, the representative values for the largest sparse graph are shown in Table~\ref{tab:lab5-sparse}.
+
+\begin{table}[H]
+    \caption{MST benchmark on sparse graphs at 700 nodes}
+    \label{tab:lab5-sparse}
+    \centering
+    {\fontsize{11}{11}\selectfont\renewcommand{\arraystretch}{1}\input{generated/lab5_sparse_table.tex}}
+\end{table}
+
+In Table~\ref{tab:lab5-sparse} it can be observed that the optimized Kruskal variant improved both execution time and memory usage compared with the classic implementation. On the sparse graph with 700 nodes, the optimized version required \(227.098\) ms, while the classic version required \(362.709\) ms. The influence of graph type is represented in Figure~\ref{fig:lab5-type}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth]{../../Lab5/plots/mst_by_graph_type.png}
+    \caption{MST performance by graph type}
+    \label{fig:lab5-type}
+\end{figure}
+
+Figure~\ref{fig:lab5-type} shows how graph density influences all tested algorithms. Dense graphs systematically lead to higher running times because they contain many more candidate edges to inspect.
+
+\reportlabel{Conclusion}
+
+Kruskal remains a strong greedy solution for MST construction, especially when combined with an efficient disjoint-set structure. The optimized version is preferable for larger graphs because it improves both speed and memory behavior.
+
+\reportunnumberedsection{CONCLUSION}
+The experiments confirm that graph size and density strongly influence greedy minimum-spanning-tree algorithms. Dense graphs increase the amount of work for both Prim and Kruskal, while optimized data structures provide important practical gains.
+
+Among the tested variants, the optimized Prim implementation achieved the best overall running time, while the optimized Kruskal implementation provided a very good balance between speed and memory usage. The results therefore support the main idea of greedy algorithm analysis: the design principle is important, but the practical efficiency depends decisively on the implementation details.
+
+\reportreferences{
+\bibitem{gfg-greedy}
+GeeksforGeeks. \textit{Greedy Algorithms} [online]. [cited 07.05.2026]. Available: \href{https://www.geeksforgeeks.org/greedy-algorithms/}{geeksforgeeks.org/greedy-algorithms}.
+
+\bibitem{tp-greedy}
+TutorialsPoint. \textit{Greedy Algorithms} [online]. [cited 07.05.2026]. Available: \href{https://www.tutorialspoint.com/data_structures_algorithms/greedy_algorithms.htm}{tutorialspoint.com/data\_structures\_algorithms/greedy\_algorithms.htm}.
+
+\bibitem{scaler}
+Scaler. \textit{Prim's and Kruskal's Algorithm} [online]. [cited 07.05.2026]. Available: \href{https://www.scaler.com/topics/prims-and-kruskal-algorithm/}{scaler.com/topics/prims-and-kruskal-algorithm}.
+
+\bibitem{repo}
+GitHub Repository. \textit{Lab 5 source folder} [online]. [cited 07.05.2026]. Available: \href{https://github.com/Prince-of-Nothing/aa-course-repo/tree/main/Lab5}{github.com/Prince-of-Nothing/aa-course-repo/tree/main/Lab5}.
+}
+
+\end{document}

@@ -1,0 +1,3 @@
+fastest average median-time algorithm: BFS_Optimized
+slowest average median-time algorithm: DFS_Optimized
+spread between slowest and fastest: 2.74x

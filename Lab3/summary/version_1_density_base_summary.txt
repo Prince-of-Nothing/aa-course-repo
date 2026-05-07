@@ -1,0 +1,9 @@
+  graph_type algorithm  nodes  median_time_ms  median_memory_kb  median_vertices_visited  edges  density_percent  success_rate
+density_fill  BFS_Base     10          0.0290          0.601562                     10.0   22.0             50.0           1.0
+density_fill  BFS_Base     50          0.2876          1.320312                     50.0  612.0             50.0           1.0
+density_fill  BFS_Base    100          2.7499          2.414062                    100.0 2475.0             50.0           1.0
+density_fill  BFS_Base    200         35.7599          4.289062                    200.0 9950.0             50.0           1.0
+density_fill  DFS_Base     10          0.0440          0.765625                     10.0   22.0             50.0           1.0
+density_fill  DFS_Base     50          0.4533          6.453125                     50.0  612.0             50.0           1.0
+density_fill  DFS_Base    100          4.7416         22.078125                    100.0 2475.0             50.0           1.0
+density_fill  DFS_Base    200         30.2075         86.640625                    200.0 9950.0             50.0           1.0

@@ -1,173 +1,146 @@
-# Laboratory Work 3: Empirical Analysis of DFS and BFS Algorithms
+# Laboratory Work 3: Empirical Analysis of DFS and BFS
 
 ## Subject
 Empirical analysis of algorithms: Depth First Search (DFS), Breadth First Search (BFS)
 
-## Overview
-This laboratory work implements and analyzes two fundamental graph traversal algorithms:
-- **Depth First Search (DFS)** - explores as far as possible along each branch before backtracking
-- **Breadth First Search (BFS)** - explores all neighbors at the current depth before moving to the next level
+## Scope Covered
 
-## Files Structure
+This lab covers the base assignment tasks and also includes extra comparison variants:
 
-```
-Lab3/
-├── dfs.py                    # DFS algorithm implementation
-├── bfs.py                    # BFS algorithm implementation
-├── graph_generator.py        # Various graph generation utilities
-├── comprehensive_analysis.py # Main benchmarking and analysis script
-├── plot_results.py          # Visualization script
-├── performance_data.csv     # Generated performance data (after running analysis)
-├── plots/                   # Generated visualization plots
-└── README.md               # This documentation
-```
+1. implementation of DFS and BFS in Python
+2. definition of input properties through graph size, graph density, and graph topology
+3. comparison metrics:
+   execution time, peak memory usage, visited vertices, success status
+4. empirical analysis across increasing graph sizes
+5. graphical presentation of the obtained data
+6. support material for the final report
 
-## Algorithm Implementations
+## Implemented Algorithms
 
-### DFS (Depth First Search)
-- **Recursive Implementation**: Uses call stack for traversal
-- **Iterative Implementation**: Uses explicit stack data structure
-- **Time Complexity**: O(V + E)
-- **Space Complexity**: O(V)
+- `DFS_Base`
+- `DFS_Optimized`
+- `BFS_Base`
+- `BFS_Optimized`
 
-### BFS (Breadth First Search)
-- **Implementation**: Uses queue (deque) data structure
-- **Time Complexity**: O(V + E)
-- **Space Complexity**: O(V)
+## Files
+
+- `dfs.py` - DFS demo implementation
+- `bfs.py` - BFS demo implementation
+- `graph_generator.py` - legacy graph generation helpers
+- `graph_generator_extra.py` - topology-specific generators used by the four-version workflow
+- `lab3_common.py` - shared traversal and benchmarking helpers
+- `version_1_density_base.py` - density classification, base traversal
+- `version_2_density_optimized.py` - density classification, optimized traversal
+- `version_3_topology_base.py` - graph-type classification, base traversal
+- `version_4_topology_optimized.py` - graph-type classification, optimized traversal
+- `run_four_versions.py` - runs all four required versions
+- `comprehensive_analysis.py` - legacy broad benchmark
+- `density_report_analysis.py` - density summary analysis
+- `plot_results.py` - main visualization generator
 
 ## Input Data Properties
 
-The analysis is performed against graphs with the following properties:
+The laboratory uses two complementary ways of classifying graphs.
 
-### Graph Sizes (Vertices)
-- Density sweep sizes: 100 evenly spaced vertex counts from 2 to 1000 (inclusive)
+### 1. Density / Fill Classification
 
-### Graph Types
-1. **Sparse Graph**: ~n edges for n vertices
-2. **Dense Graph**: High edge probability (p=0.5)
-3. **Tree Structure**: n-1 edges, no cycles
-4. **Linear/Path Graph**: Simple chain structure
-5. **Grid Graph**: 2D lattice structure
-6. **Binary Tree**: Complete binary tree structure
+- graph sizes used by the base density runs: `10, 50, 100, 200`
+- density values from `0%` to `100%`
+- `version_1_density_base.py` and `version_2_density_optimized.py` use literal fill percentage:
+  - `0%` means no edges
+  - `100%` means a complete graph
 
-### Edge Densities
-- 0%, 5%, 10%, ..., 100% (step 5%)
-- Density mapping for each vertex count n:
-	- 0% corresponds to n-1 edges (connected tree baseline)
-	- 100% corresponds to n(n-1)/2 edges (complete graph)
-	- Intermediate levels use linear scaling between these two bounds
+### 2. Graph Type Classification
 
-## Metrics for Comparison
+The topology versions classify the input by named graph type. The generators include:
 
-1. **Execution Time (ms)**: Measured using `time.perf_counter()`
-2. **Peak Memory Usage (KB)**: Measured using `tracemalloc`
-3. **Vertices Visited**: Number of vertices successfully traversed
-4. **Success Rate**: Whether the algorithm completed without errors
-5. **Trials per Configuration**: 20 runs per algorithm and configuration (median reported)
+- `simple_graph`
+- `dense_graph`
+- `tree`
+- `cyclic_graph`
+- `bipartite_graph`
+- `complete_graph`
+- `wheel_graph`
+- `grid_planar`
+- `weighted_graph`
+- `strip_weights`
+- `disconnected_graph`
 
-## How to Run
+The optimized topology runs include sizes up to `1000` nodes in order to show scaling more clearly.
 
-### 1. Run the Analysis
+### Legacy Benchmark Note
+
+`comprehensive_analysis.py` uses an older density interpretation where the lowest density setting corresponds to a connected-tree baseline rather than a truly empty graph. The four dedicated version scripts use the newer literal fill model and are the recommended deliverables for the assignment.
+
+## Metrics
+
+- execution time in milliseconds
+- peak memory usage in kilobytes
+- visited vertices
+- success status
+- node count
+- edge count
+- density percentage
+
+## Run
+
+### Run the Four Required Versions
+
+```bash
+cd Lab3
+python version_1_density_base.py
+python version_2_density_optimized.py
+python version_3_topology_base.py
+python version_4_topology_optimized.py
+```
+
+Or run everything in one step:
+
+```bash
+cd Lab3
+python run_four_versions.py
+```
+
+### Run the Legacy Comprehensive Benchmark
+
 ```bash
 cd Lab3
 python comprehensive_analysis.py
 ```
-This will:
-- Run a density-only size x density matrix benchmark using the 0%-to-100% edge mapping rule
-- Use stepped sizes from 2 to 1000 to keep runtime practical
-- Show per-size progress with elapsed time and ETA in the terminal
-- Generate `performance_data.csv`
 
-### 2. Generate Visualizations
+### Generate Plots
+
 ```bash
+cd Lab3
 python plot_results.py
 ```
-This creates visualizations in the `plots/` directory:
-- `dfs_performance_vs_nodes.png`
-- `bfs_performance_vs_nodes.png`
-- `dfs_vs_bfs_performance_nodes.png`
-- `dfs_vs_bfs_performance_edges.png`
-- `memory_usage_comparison.png`
-- `performance_by_graph_type.png`
-- `comprehensive_analysis.png`
 
-### 3. Run Individual Algorithms
-```bash
-python dfs.py  # Demo of DFS
-python bfs.py  # Demo of BFS
-```
+## Generated Outputs
 
-## Theoretical Background
+- `version_1_density_base.csv`
+- `version_2_density_optimized.csv`
+- `version_3_topology_base.csv`
+- `version_4_topology_optimized.csv`
+- `performance_data.csv` from the legacy benchmark
+- `plots/dfs_performance_vs_nodes.png`
+- `plots/bfs_performance_vs_nodes.png`
+- `plots/dfs_vs_bfs_performance_nodes.png`
+- `plots/dfs_vs_bfs_performance_edges.png`
+- `plots/memory_usage_comparison.png`
+- `plots/performance_by_graph_type.png`
+- `plots/comprehensive_analysis.png`
+- `summary/*.csv`
+- `summary/*.txt`
 
-### DFS (Depth First Search)
-DFS uses a stack (either implicit via recursion or explicit) to explore vertices. It goes as deep as possible along each branch before backtracking.
+## Practical Notes
 
-**Characteristics:**
-- Uses less memory for wide graphs
-- May not find shortest path
-- Good for detecting cycles, topological sorting
-- Can cause stack overflow on very deep graphs (recursive version)
+- BFS is especially useful for shortest paths in unweighted graphs.
+- DFS is often useful for reachability, connected components, cycle checks, and structural exploration.
+- The optimized variants scale better because they use more suitable containers (`set`, `deque`) for traversal bookkeeping.
+- Dense and complete graphs increase the runtime significantly because both algorithms still have to inspect many more edges.
 
-### BFS (Breadth First Search)
-BFS uses a queue to explore vertices level by level, visiting all neighbors at the current depth before moving deeper.
-
-**Characteristics:**
-- Finds shortest path in unweighted graphs
-- Uses more memory for wide graphs
-- Level-order traversal
-- Good for finding shortest paths, level-order operations
-
-## Expected Results
-
-### Time Complexity Analysis
-Both DFS and BFS have theoretical time complexity of O(V + E):
-- For sparse graphs (E ≈ V): O(V)
-- For dense graphs (E ≈ V²): O(V²)
-
-### Performance Patterns
-1. **Sparse Graphs**: Both algorithms perform similarly
-2. **Dense Graphs**: Performance degrades quadratically with vertices
-3. **Tree Structures**: Both algorithms are efficient
-4. **Linear Graphs**: DFS recursive may cause stack issues; iterative versions perform well
-
-### Memory Usage
-- **DFS Iterative**: Stack size ≤ V
-- **DFS Recursive**: Call stack depth can reach V (stack overflow risk)
-- **BFS**: Queue size can approach V for wide graphs
-
-## Conclusions
-
-### 1. Time Complexity Verification
-Both DFS and BFS exhibit O(V + E) time complexity as expected. The empirical analysis confirms that:
-- Execution time scales linearly with the sum of vertices and edges
-- Dense graphs require significantly more time due to higher edge count
-
-### 2. Algorithm Comparison
-- **DFS Iterative** is generally slightly faster due to lower overhead
-- **BFS** provides consistent performance and is preferred when shortest paths are needed
-- **DFS Recursive** risks stack overflow on large or deep graphs
-
-### 3. Graph Structure Impact
-- **Tree structures** show optimal performance for both algorithms
-- **Dense graphs** significantly increase execution time
-- **Linear graphs** can cause issues with recursive DFS due to deep recursion
-
-### 4. Memory Considerations
-- BFS typically uses more memory (queue stores entire levels)
-- DFS iterative is more memory-efficient for deep graphs
-- Both scale linearly with the number of vertices
-
-### 5. Practical Recommendations
-- Use **BFS** when finding shortest paths in unweighted graphs
-- Use **DFS Iterative** for memory-efficient traversal
-- Avoid **DFS Recursive** for potentially deep graphs
-- Choose based on the specific problem requirements (path finding, cycle detection, etc.)
-
-## References
+## Theory Links
 
 1. [GeeksforGeeks - BFS](https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/)
 2. [GeeksforGeeks - DFS](https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/)
-3. [YouTube - Graph Algorithms](https://www.youtube.com/watch?v=zaBhtODEL0w)
-
-## Author
-Laboratory Work 3 - Algorithm Analysis Course
+3. [YouTube - Graph Traversal Algorithms](https://www.youtube.com/watch?v=zaBhtODEL0w)

@@ -33,6 +33,63 @@ def export_table(table_df, csv_path, md_path, float_format='%.3f'):
             # Fallback when optional dependency 'tabulate' is not installed.
             f.write(table_df.to_string())
 
+def choose_node_scaling_slice(data):
+    legacy_slice = data[data['graph_type'] == 'Random (p=0.1)'].copy()
+    if not legacy_slice.empty:
+        return legacy_slice, 'Random (p=0.1)'
+
+    if 'density_percent' in data.columns:
+        density_rows = data[data['density_percent'].notna()].copy()
+        if not density_rows.empty:
+            density_candidates = (
+                density_rows.groupby('density_percent')['nodes']
+                .nunique()
+                .reset_index(name='node_count')
+                .sort_values(['node_count', 'density_percent'], ascending=[False, True])
+            )
+            if not density_candidates.empty:
+                available = density_candidates['density_percent'].tolist()
+                preferred = next((value for value in [10, 5, 15, 20, 25] if value in available), None)
+                selected_density = preferred if preferred is not None else density_candidates.iloc[0]['density_percent']
+                selected_rows = density_rows[density_rows['density_percent'] == selected_density].copy()
+                if not selected_rows.empty:
+                    return selected_rows, f'Density {selected_density}%'
+
+    return pd.DataFrame(), None
+
+def load_type_comparison_data(base_path):
+    main_type_labels = [
+        'Sparse',
+        'Dense (p=0.5)',
+        'Tree',
+        'Linear/Path',
+        'Grid (45x45)',
+        'Binary Tree (d=10)'
+    ]
+
+    legacy_path = os.path.join(base_path, 'performance_data.csv')
+    legacy_data = pd.read_csv(legacy_path)
+    legacy_data = legacy_data[legacy_data['success'] == True]
+    legacy_types = legacy_data[legacy_data['graph_type'].isin(main_type_labels)].copy()
+    if not legacy_types.empty:
+        return legacy_types, 'legacy'
+
+    topology_path = os.path.join(base_path, 'version_3_topology_base.csv')
+    if not os.path.exists(topology_path):
+        return pd.DataFrame(), None
+
+    topology_data = pd.read_csv(topology_path)
+    topology_data = topology_data[topology_data['success'] == True].copy()
+    if topology_data.empty:
+        return pd.DataFrame(), None
+
+    topology_data['algorithm'] = topology_data['algorithm'].replace({
+        'DFS_Base': 'DFS_Iterative',
+        'BFS_Base': 'BFS'
+    })
+    topology_data = topology_data[topology_data['algorithm'].isin(['DFS_Iterative', 'BFS'])].copy()
+    return topology_data, 'topology'
+
 def build_range_frame(data, algorithm, density_percent, metric_col):
     subset = data[
         (data['algorithm'] == algorithm) &
@@ -256,7 +313,7 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
 
     data = data[data['success'] == True]
 
-    size_data = data[data['graph_type'] == 'Random (p=0.1)']
+    size_data, size_slice_label = choose_node_scaling_slice(data)
 
     if 'density_percent' in data.columns and data['density_percent'].notna().any():
         density_data = data[data['density_percent'].notna()].copy()
@@ -284,15 +341,7 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
                 f"Warning: density data contains {density_node_count} unique node sizes. "
                 "For the new setup, regenerate CSV via comprehensive_analysis.py to get 100 sizes (2..1000)."
             )
-    main_type_labels = [
-        'Sparse',
-        'Dense (p=0.5)',
-        'Tree',
-        'Linear/Path',
-        'Grid (45x45)',
-        'Binary Tree (d=10)'
-    ]
-    type_data = data[data['graph_type'].isin(main_type_labels)]
+    type_data, type_data_source = load_type_comparison_data(base_path)
 
     plt.style.use('seaborn-v0_8-whitegrid')
     colors = {'DFS_Iterative': '#3498db', 'DFS_Recursive': '#9b59b6', 'BFS': '#2ecc71'}
@@ -307,7 +356,8 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
         has_dfs_rec = plot_median_line(ax, size_data, 'nodes', 'execution_time_ms',
                                        'DFS_Recursive', colors['DFS_Recursive'], '^', 'DFS_Recursive')
 
-        plt.title('DFS Performance: Execution Time vs. Number of Nodes', fontsize=14, fontweight='bold')
+        slice_note = f' ({size_slice_label})' if size_slice_label else ''
+        plt.title(f'DFS Performance: Execution Time vs. Number of Nodes{slice_note}', fontsize=14, fontweight='bold')
         plt.xlabel('Number of Nodes (V)', fontsize=12)
         plt.ylabel('Execution Time (milliseconds)', fontsize=12)
         plt.grid(True, linestyle='--', alpha=0.7)
@@ -325,7 +375,7 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
         has_bfs = plot_median_line(ax, size_data, 'nodes', 'execution_time_ms',
                                    'BFS', colors['BFS'], 's', 'BFS')
 
-        plt.title('BFS Performance: Execution Time vs. Number of Nodes', fontsize=14, fontweight='bold')
+        plt.title(f'BFS Performance: Execution Time vs. Number of Nodes{slice_note}', fontsize=14, fontweight='bold')
         plt.xlabel('Number of Nodes (V)', fontsize=12)
         plt.ylabel('Execution Time (milliseconds)', fontsize=12)
         plt.grid(True, linestyle='--', alpha=0.7)
@@ -345,7 +395,7 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
         has_bfs = plot_median_line(ax, size_data, 'nodes', 'execution_time_ms',
                                    'BFS', colors['BFS'], 's', 'BFS')
 
-        plt.title('Performance Comparison: DFS vs. BFS (Time vs. Nodes)', fontsize=14, fontweight='bold')
+        plt.title(f'Performance Comparison: DFS vs. BFS (Time vs. Nodes{slice_note})', fontsize=14, fontweight='bold')
         plt.xlabel('Number of Nodes (V)', fontsize=12)
         plt.ylabel('Execution Time (milliseconds)', fontsize=12)
         if has_dfs_iter or has_bfs:
@@ -388,7 +438,7 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
         has_dfs_rec = plot_median_line(ax, size_data, 'nodes', 'peak_memory_kb',
                                        'DFS_Recursive', colors['DFS_Recursive'], '^', 'DFS_Recursive')
 
-        plt.title('Memory Usage Comparison: DFS vs. BFS', fontsize=14, fontweight='bold')
+        plt.title(f'Memory Usage Comparison: DFS vs. BFS{slice_note}', fontsize=14, fontweight='bold')
         plt.xlabel('Number of Nodes (V)', fontsize=12)
         plt.ylabel('Peak Memory Usage (KB)', fontsize=12)
         if has_dfs_iter or has_bfs or has_dfs_rec:
@@ -413,7 +463,8 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
         if not pivot_data.empty:
             ax = pivot_data.plot(kind='bar', width=0.8, figsize=(12, 6),
                                color=[colors.get(c, 'gray') for c in pivot_data.columns])
-            plt.title('Algorithm Performance by Graph Type', fontsize=14, fontweight='bold')
+            source_note = ' (topology fallback)' if type_data_source == 'topology' else ''
+            plt.title(f'Algorithm Performance by Graph Type{source_note}', fontsize=14, fontweight='bold')
             plt.xlabel('Graph Type', fontsize=12)
             plt.ylabel('Execution Time (ms)', fontsize=12)
             plt.xticks(rotation=45, ha='right')
@@ -435,7 +486,7 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
                                'BFS', colors['BFS'], 's', 'BFS')
     ax1.set_xlabel('Number of Nodes (V)')
     ax1.set_ylabel('Time (ms)')
-    ax1.set_title('Execution Time vs Nodes')
+    ax1.set_title(f'Execution Time vs Nodes{slice_note}' if size_slice_label else 'Execution Time vs Nodes')
     if has_dfs_iter or has_bfs:
         ax1.legend()
     else:
@@ -461,7 +512,7 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
                                'BFS', colors['BFS'], 's', 'BFS')
     ax3.set_xlabel('Number of Nodes (V)')
     ax3.set_ylabel('Memory (KB)')
-    ax3.set_title('Memory Usage vs Nodes')
+    ax3.set_title(f'Memory Usage vs Nodes{slice_note}' if size_slice_label else 'Memory Usage vs Nodes')
     if has_dfs_iter or has_bfs:
         ax3.legend()
     else:
@@ -486,9 +537,14 @@ def plot_performance(csv_file='performance_data.csv', output_dir='plots'):
             ax4.set_xticks(x)
             ax4.set_xticklabels(pivot_data.index, rotation=45, ha='right')
             ax4.set_ylabel('Time (ms)')
-            ax4.set_title('Performance by Graph Type')
+            source_note = ' (topology fallback)' if type_data_source == 'topology' else ''
+            ax4.set_title(f'Performance by Graph Type{source_note}')
             ax4.legend()
             ax4.grid(True, axis='y', alpha=0.3)
+        else:
+            ax4.text(0.5, 0.5, 'No comparable DFS/BFS type data', ha='center', va='center', transform=ax4.transAxes)
+    else:
+        ax4.text(0.5, 0.5, 'No graph-type comparison data', ha='center', va='center', transform=ax4.transAxes)
 
     plt.tight_layout()
     comprehensive_plot_path = os.path.join(output_path, 'comprehensive_analysis.png')

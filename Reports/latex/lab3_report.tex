@@ -1,0 +1,189 @@
+\documentclass[12pt,a4paper]{article}
+\newcommand{\reportTitle}{Laboratory work 3:}
+\newcommand{\reportSubject}{Study and Empirical Analysis of\\[0.3cm]DFS and BFS Graph Traversal Algorithms}
+\input{common_report.tex}
+
+\startreport
+
+\reportprelimsection{LIST OF ABBREVIATIONS AND DEFINITIONS}
+\begin{itemize}
+    \item BFS - Breadth First Search, a graph traversal algorithm that explores vertices by levels;
+    \item DFS - Depth First Search, a graph traversal algorithm that explores one branch before backtracking;
+    \item graph density - ratio between existing edges and the maximum possible number of edges;
+    \item KB - kilobytes;
+    \item ms - milliseconds;
+    \item traversal - process of visiting reachable vertices in a graph.
+\end{itemize}
+
+\reportintroduction
+Depth First Search and Breadth First Search are two fundamental graph traversal algorithms. Both determine which vertices are reachable from a starting point, but they explore the graph in different ways. DFS follows a branch as deeply as possible before backtracking, while BFS explores the graph level by level.
+
+These traversal strategies are important because they form the basis for many other graph algorithms. In practice, their empirical behavior depends not only on the number of vertices, but also on the number of edges, on graph density, and on the implementation choices used in the program.
+
+\reportmainsection{ALGORITHM ANALYSIS}
+
+\reportlabel{Objective}
+Study and analyze Depth First Search and Breadth First Search on graphs with different sizes and structures.
+
+\reportlabel{Tasks}
+\begin{enumerate}[leftmargin=1.25cm]
+    \item implement the algorithms listed above in a programming language;
+    \item establish the properties of the input data against which the analysis is performed;
+    \item choose metrics for comparing algorithms;
+    \item perform empirical analysis of the proposed algorithms;
+    \item make a graphical presentation of the data obtained;
+    \item make a conclusion on the work done.
+\end{enumerate}
+
+\reportlabel{Theoretical Notes}
+An alternative to mathematical analysis of complexity is empirical analysis. This may be useful for obtaining preliminary information on the complexity class of an algorithm, for comparing the efficiency of several algorithms that solve the same problem, and for observing the practical effect of implementation details on a particular computer \cite{gfg-bfs,gfg-dfs}.
+
+In the empirical analysis of an algorithm, the following steps are usually followed: the purpose of the analysis is established; the efficiency metric is selected; the properties of the input data are defined; the algorithms are implemented; multiple input sets are generated; the program is executed for each input set; the obtained data are analyzed and represented graphically.
+
+Both DFS and BFS have theoretical time complexity \(O(V + E)\) when the graph is represented through adjacency lists. Even so, the practical running time depends strongly on the number of edges, on the graph topology, and on the internal data structures used by the implementation \cite{gfg-bfs,gfg-dfs,yt}.
+
+\reportlabel{Comparison Metric}
+The comparison metrics chosen for the laboratory were:
+\begin{itemize}[leftmargin=1.25cm]
+    \item execution time in milliseconds;
+    \item peak memory usage in kilobytes;
+    \item number of visited vertices;
+    \item success rate of the execution.
+\end{itemize}
+
+\reportlabel{Input Format}
+The laboratory used two complementary styles of graph generation:
+\begin{itemize}[leftmargin=1.25cm]
+    \item graphs classified by fill percentage, from \(0\%\) to \(100\%\);
+    \item graphs classified by topology, such as tree, complete graph, bipartite graph, cyclic graph, wheel graph, grid-planar graph, and disconnected graph.
+\end{itemize}
+
+For the base density program, representative sizes of 10, 50, 100, and 200 vertices were used. For the optimized topology program, sizes up to 1000 vertices were included in order to observe the scaling behavior more clearly.
+
+\reportmainsection{IMPLEMENTATION}
+
+\tocsubsection{Depth First Search}
+The DFS implementation was prepared in both base and optimized forms. The base form uses simpler list-based structures, while the optimized form uses more suitable containers and membership tests. DFS explores one branch of the graph as deeply as possible before backtracking.
+
+\reportlabel{Algorithm Description}
+
+The DFS method follows the idea shown in the next pseudocode.
+
+\begin{lstlisting}
+DFS(graph, start):
+    mark start as visited
+    push start on stack
+    while stack is not empty:
+        node = pop stack
+        for each neighbor of node:
+            if neighbor is not visited:
+                mark neighbor as visited
+                push neighbor on stack
+\end{lstlisting}
+
+\reportlabel{Implementation}
+
+The project contains both a classic and an optimized DFS implementation in the \texttt{Lab3} folder, and these were benchmarked against multiple graph families \cite{repo}.
+
+\reportlabel{Results}
+
+After running the DFS function for each graph size defined in the density and topology specifications and recording execution time and memory usage, the representative results are shown in Table~\ref{tab:lab3-density}.
+
+\begin{table}[H]
+    \caption{DFS and BFS base results at 50\% fill}
+    \label{tab:lab3-density}
+    \centering
+    {\fontsize{11}{11}\selectfont\renewcommand{\arraystretch}{1}\input{generated/lab3_density_table.tex}}
+\end{table}
+
+In Table~\ref{tab:lab3-density} it can be observed that DFS grows with the graph size and that, in the base program, it uses considerably more memory than BFS as the number of nodes increases. For 200 vertices and \(50\%\) fill, DFS reached \(30.207\) ms and \(86.64\) KB median memory. The node-scaling behavior is represented in Figure~\ref{fig:dfs-nodes}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.83\textwidth]{../../Lab3/plots/dfs_performance_vs_nodes.png}
+    \caption{DFS performance depending on the number of nodes}
+    \label{fig:dfs-nodes}
+\end{figure}
+
+In Figure~\ref{fig:dfs-nodes} the growth of execution time relative to the number of nodes can be observed directly. The increase is stronger on denser configurations because a larger number of edges must be processed.
+
+\reportlabel{Conclusion}
+
+DFS is effective for graph traversal and follows the expected \(O(V + E)\) trend. However, the implementation details matter: the optimized version remains more stable on large and dense graphs, while the base version can consume significantly more memory.
+
+\tocsubsection{Breadth First Search}
+The BFS implementation uses queue-based traversal. It visits all neighbors on the current level before moving to the next depth level, which makes it suitable for shortest paths in unweighted graphs.
+
+\reportlabel{Algorithm Description}
+
+The BFS method follows the idea shown in the next pseudocode.
+
+\begin{lstlisting}
+BFS(graph, start):
+    mark start as visited
+    enqueue start
+    while queue is not empty:
+        node = dequeue queue
+        for each neighbor of node:
+            if neighbor is not visited:
+                mark neighbor as visited
+                enqueue neighbor
+\end{lstlisting}
+
+\reportlabel{Implementation}
+
+The optimized BFS variant uses efficient queue operations and fast visited checks. The corresponding benchmark scripts compare it with DFS over both density-based and topology-based inputs.
+
+\reportlabel{Results}
+
+After running the BFS function for the generated graphs, the optimized topology benchmark produced the representative values shown in Table~\ref{tab:lab3-topology}.
+
+\begin{table}[H]
+    \caption{Optimized topology results at 1000 nodes}
+    \label{tab:lab3-topology}
+    \centering
+    {\fontsize{11}{11}\selectfont\renewcommand{\arraystretch}{1}\input{generated/lab3_topology_table.tex}}
+\end{table}
+
+In Table~\ref{tab:lab3-topology} it can be observed that BFS behaves very differently depending on the graph topology. On a tree of 1000 vertices, BFS needed only \(2.200\) ms, while on a complete graph with 499500 edges it needed \(96.790\) ms. This confirms that the edge count has a decisive effect on the execution time. The node-based BFS behavior is shown in Figure~\ref{fig:bfs-nodes}, and the combined analysis is shown in Figure~\ref{fig:lab3-comp}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.83\textwidth]{../../Lab3/plots/bfs_performance_vs_nodes.png}
+    \caption{BFS performance depending on the number of nodes}
+    \label{fig:bfs-nodes}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.90\textwidth]{../../Lab3/plots/comprehensive_analysis.png}
+    \caption{Comprehensive DFS and BFS analysis}
+    \label{fig:lab3-comp}
+\end{figure}
+
+Figure~\ref{fig:lab3-comp} offers a combined perspective on the two algorithms. It shows execution time versus nodes, execution time versus density, memory usage versus nodes, and performance by graph type.
+
+\reportlabel{Conclusion}
+
+BFS proved to be the best average performer among the optimized variants in the generated Lab 3 summaries. It remained especially effective on sparse topologies such as trees and grid-planar graphs, while its running time increased substantially on complete graphs because of the much larger edge set.
+
+\reportunnumberedsection{CONCLUSION}
+The performed experiments confirm that both DFS and BFS follow the theoretical \(O(V + E)\) tendency, but their practical behavior is strongly influenced by graph density, topology, and implementation details. Sparse structures such as trees and grid graphs remain inexpensive, while complete and near-complete graphs increase the cost considerably.
+
+The four-version organization of the laboratory was useful because it separated two ideas of classification: percentage of fill and graph topology. This produced a clearer empirical analysis than a single benchmark setup would have provided. Overall, BFS was the fastest average optimized variant, while DFS was more sensitive to the structure of the graph and to the choice of data structures used internally.
+
+\reportreferences{
+\bibitem{gfg-bfs}
+GeeksforGeeks. \textit{Breadth First Search or BFS for a Graph} [online]. [cited 07.05.2026]. Available: \href{https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/}{geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph}.
+
+\bibitem{gfg-dfs}
+GeeksforGeeks. \textit{Depth First Search or DFS for a Graph} [online]. [cited 07.05.2026]. Available: \href{https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/}{geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph}.
+
+\bibitem{yt}
+YouTube. \textit{Graph Traversal Algorithms} [video online]. [cited 07.05.2026]. Available: \href{https://www.youtube.com/watch?v=zaBhtODEL0w}{youtube.com/watch?v=zaBhtODEL0w}.
+
+\bibitem{repo}
+GitHub Repository. \textit{Lab 3 source folder} [online]. [cited 07.05.2026]. Available: \href{https://github.com/Prince-of-Nothing/aa-course-repo/tree/main/Lab3}{github.com/Prince-of-Nothing/aa-course-repo/tree/main/Lab3}.
+}
+
+\end{document}

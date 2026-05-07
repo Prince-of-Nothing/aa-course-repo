@@ -1,0 +1,8 @@
+all_pairs:
+  fastest average median-time algorithm: FloydWarshall_Classic
+  slowest average median-time algorithm: FloydWarshall_Optimized
+  spread between slowest and fastest: 1.21x
+single_source:
+  fastest average median-time algorithm: Dijkstra_Optimized
+  slowest average median-time algorithm: Dijkstra_Classic
+  spread between slowest and fastest: 28.53x
