@@ -1,0 +1,3 @@
+fastest average median-time algorithm: Prim_Optimized
+slowest average median-time algorithm: Prim_Classic
+spread between slowest and fastest: 4.47x

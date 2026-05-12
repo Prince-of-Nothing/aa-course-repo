@@ -1,0 +1,13 @@
+graph_type,algorithm,nodes,median_time_ms,median_memory_kb,median_vertices_visited,edges,density_percent,success_rate
+density_fill,BFS_Optimized,10,0.03260000084992498,1.8984375,10.0,22.0,50.0,1.0
+density_fill,BFS_Optimized,50,0.15980000171111897,3.8046875,50.0,612.0,50.0,1.0
+density_fill,BFS_Optimized,100,0.5766999965999275,11.8203125,100.0,2475.0,50.0,1.0
+density_fill,BFS_Optimized,200,1.4563000004272908,12.3828125,200.0,9950.0,50.0,1.0
+density_fill,BFS_Optimized,500,8.235099994635675,43.3671875,500.0,62375.0,50.0,1.0
+density_fill,BFS_Optimized,1000,37.389400000392925,49.6015625,1000.0,249750.0,50.0,1.0
+density_fill,DFS_Optimized,10,0.07670000195503235,1.3515625,10.0,22.0,50.0,1.0
+density_fill,DFS_Optimized,50,0.3471000018180348,8.421875,50.0,612.0,50.0,1.0
+density_fill,DFS_Optimized,100,0.875699995958712,31.078125,100.0,2475.0,50.0,1.0
+density_fill,DFS_Optimized,200,2.8835999983130023,94.203125,200.0,9950.0,50.0,1.0
+density_fill,DFS_Optimized,500,30.559300001186784,531.078125,500.0,62375.0,50.0,1.0
+density_fill,DFS_Optimized,1000,96.2299000020721,2050.171875,1000.0,249750.0,50.0,1.0
