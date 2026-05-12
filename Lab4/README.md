@@ -1,4 +1,4 @@
-# Laboratory Work 5: Dynamic Programming
+# Laboratory Work 4: Dynamic Programming
 
 ## Subject
 Empirical analysis of algorithms: `Dijkstra` and `Floyd-Warshall`

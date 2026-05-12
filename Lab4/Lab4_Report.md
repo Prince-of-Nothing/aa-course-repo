@@ -1,4 +1,4 @@
-# Laboratory Work 5 Report
+# Laboratory Work 4 Report
 
 ## Subject
 Dynamic programming. Empirical analysis of `Dijkstra` and `Floyd-Warshall`.

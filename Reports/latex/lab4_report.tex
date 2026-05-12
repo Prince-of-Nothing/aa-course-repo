@@ -85,25 +85,25 @@ The optimized version replaces repeated linear minimum selection with a heap-bas
 
 \reportlabel{Results}
 
-After running Dijkstra for each graph size defined in the dataset specifications and recording execution time and memory usage, the representative results are shown in Table~\ref{tab:lab4-dijkstra}.
+After running Dijkstra for each graph size defined in the dataset specifications and recording execution time and memory usage, the representative results are presented in Table~\ref{tab:lab4-dijkstra}.
 
 \begin{table}[H]
-    \caption{Dijkstra benchmark at 1500 nodes}
+    \caption{Table 2.1 -- Dijkstra benchmark at 1500 nodes}
     \label{tab:lab4-dijkstra}
     \centering
     {\fontsize{11}{11}\selectfont\renewcommand{\arraystretch}{1}\input{generated/lab4_dijkstra_table.tex}}
 \end{table}
 
-In Table~\ref{tab:lab4-dijkstra} it can be observed that the optimized implementation is substantially faster than the classic one. On the dense graph with 1500 nodes and 1461720 edges, the classic version required \(4562.149\) ms, while the optimized version required only \(226.503\) ms. This difference is represented graphically in Figure~\ref{fig:lab4-dijkstra}.
+According to Table~\ref{tab:lab4-dijkstra}, the optimized implementation is substantially faster than the classic one. On the dense graph with 1500 nodes and 1461720 edges, the classic version required \(4562.149\) ms, while the optimized version required only \(226.503\) ms. This difference is presented graphically in Figure~\ref{fig:lab4-dijkstra}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.88\textwidth]{../../Lab4/plots/dijkstra_sparse_dense_performance.png}
-    \caption{Dijkstra performance on sparse and dense graphs}
+    \caption{Figure 2.1 -- Dijkstra performance on sparse and dense graphs}
     \label{fig:lab4-dijkstra}
 \end{figure}
 
-Figure~\ref{fig:lab4-dijkstra} shows clearly that the difference between the two implementations grows as the number of nodes increases. The logarithmic scale is needed because the gap becomes very large on the bigger graphs.
+According to Figure~\ref{fig:lab4-dijkstra}, the difference between the two implementations grows as the number of nodes increases. The logarithmic scale is required because the gap becomes very large on the bigger graphs.
 
 \reportlabel{Conclusion}
 
@@ -132,25 +132,25 @@ The optimized version attempts to skip unnecessary updates when intermediate sta
 
 \reportlabel{Results}
 
-After executing Floyd--Warshall for each graph size from the second input range, the representative values are shown in Table~\ref{tab:lab4-floyd}.
+After executing Floyd--Warshall for each graph size from the second input range, the representative values are presented in Table~\ref{tab:lab4-floyd}.
 
 \begin{table}[H]
-    \caption{Floyd--Warshall benchmark at 125 nodes}
+    \caption{Table 2.2 -- Floyd--Warshall benchmark at 125 nodes}
     \label{tab:lab4-floyd}
     \centering
     {\fontsize{11}{11}\selectfont\renewcommand{\arraystretch}{1}\input{generated/lab4_floyd_table.tex}}
 \end{table}
 
-In Table~\ref{tab:lab4-floyd} it can be observed that the difference between the classic and optimized Floyd--Warshall variants is not as dramatic as for Dijkstra. On dense graphs, the classic version remained faster, while on sparse graphs the optimized version produced a small improvement. The corresponding graph is shown in Figure~\ref{fig:lab4-floyd}.
+According to Table~\ref{tab:lab4-floyd}, the difference between the classic and optimized Floyd--Warshall variants is not as pronounced as for Dijkstra. On dense graphs, the classic version remained faster, while on sparse graphs the optimized version produced a marginal improvement. The corresponding graph is presented in Figure~\ref{fig:lab4-floyd}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.88\textwidth]{../../Lab4/plots/floyd_warshall_sparse_dense_performance.png}
-    \caption{Floyd--Warshall performance on sparse and dense graphs}
+    \caption{Figure 2.2 -- Floyd--Warshall performance on sparse and dense graphs}
     \label{fig:lab4-floyd}
 \end{figure}
 
-The graph in Figure~\ref{fig:lab4-floyd} illustrates the strong growth of running time relative to the number of nodes. Even though the tested node counts are much smaller than for Dijkstra, the increase is already significant because of the cubic complexity of the method.
+According to Figure~\ref{fig:lab4-floyd}, the strong growth of running time relative to the number of nodes is clearly visible. Even though the tested node counts are much smaller than for Dijkstra, the increase is already significant due to the cubic complexity of the method.
 
 \reportlabel{Conclusion}
 
@@ -163,16 +163,16 @@ The sparse-versus-dense comparison was particularly informative. Dense graphs in
 
 \reportreferences{
 \bibitem{gfg-dp}
-GeeksforGeeks. \textit{Dynamic Programming} [online]. [cited 07.05.2026]. Available: \href{https://www.geeksforgeeks.org/dynamic-programming/}{geeksforgeeks.org/dynamic-programming}.
+GeeksforGeeks. \textit{Dynamic Programming} [online]. [cited 07.05.2026]. Available: \url{https://www.geeksforgeeks.org/dynamic-programming/}.
 
 \bibitem{tp-dp}
-TutorialsPoint. \textit{Dynamic Programming} [online]. [cited 07.05.2026]. Available: \href{https://www.tutorialspoint.com/data_structures_algorithms/dynamic_programming.htm}{tutorialspoint.com/data\_structures\_algorithms/dynamic\_programming.htm}.
+TutorialsPoint. \textit{Dynamic Programming} [online]. [cited 07.05.2026]. Available: \url{https://www.tutorialspoint.com/data_structures_algorithms/dynamic_programming.htm}.
 
 \bibitem{cn}
-Coding Ninjas. \textit{Dijkstra's Algorithm vs Floyd--Warshall's Algorithm} [online]. [cited 07.05.2026]. Available: \href{https://www.codingninjas.com/codestudio/library/dijkstras-algorithm-vs-floydwarshalls-algorithm}{codingninjas.com/codestudio/library/dijkstras-algorithm-vs-floydwarshalls-algorithm}.
+Coding Ninjas. \textit{Dijkstra's Algorithm vs Floyd--Warshall's Algorithm} [online]. [cited 07.05.2026]. Available: \url{https://www.codingninjas.com/codestudio/library/dijkstras-algorithm-vs-floydwarshalls-algorithm}.
 
 \bibitem{repo}
-GitHub Repository. \textit{Lab 4 source folder} [online]. [cited 07.05.2026]. Available: \href{https://github.com/Prince-of-Nothing/aa-course-repo/tree/main/Lab4}{github.com/Prince-of-Nothing/aa-course-repo/tree/main/Lab4}.
+Ple\c{s}u D. \textit{aa-course-repo, Lab 4 source folder} [online]. GitHub, 2026. [cited 07.05.2026]. Available: \url{https://github.com/Prince-of-Nothing/aa-course-repo/tree/main/Lab4}.
 }
 
 \end{document}

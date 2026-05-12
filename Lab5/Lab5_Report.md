@@ -1,4 +1,4 @@
-# Laboratory Work 7 Report
+# Laboratory Work 5 Report
 
 ## Subject
 Greedy algorithms. Empirical analysis of `Prim` and `Kruskal`.

@@ -82,29 +82,29 @@ Prim(graph, start):
 
 \reportlabel{Implementation}
 
-The classic version keeps a simpler selection process, while the optimized version uses a more suitable heap-based approach. This improves execution time, but increases auxiliary memory usage.
+The classic version keeps a simpler selection process, while the optimized version uses a more suitable heap-based approach. This improves execution time, and the memory impact depends on graph structure and edge volume.
 
 \reportlabel{Results}
 
-After executing the Prim implementations on all graph sizes and graph types, the representative values for the largest dense graph are shown in Table~\ref{tab:lab5-dense}.
+After executing the Prim implementations on all graph sizes and graph types, the representative values for the largest dense graph are presented in Table~\ref{tab:lab5-dense}.
 
 \begin{table}[H]
-    \caption{MST benchmark on dense graphs at 700 nodes}
+    \caption{Table 2.1 -- MST benchmark on dense graphs at 700 nodes}
     \label{tab:lab5-dense}
     \centering
     {\fontsize{11}{11}\selectfont\renewcommand{\arraystretch}{1}\input{generated/lab5_dense_table.tex}}
 \end{table}
 
-In Table~\ref{tab:lab5-dense} it can be observed that the optimized Prim variant achieved the best running time among all implementations on the dense graph, with \(435.592\) ms. At the same time, it required the largest memory usage, which shows the trade-off introduced by the optimization. The overall MST performance is represented in Figure~\ref{fig:lab5-main}.
+According to Table~\ref{tab:lab5-dense}, the optimized Prim variant achieved the best running time among all implementations on the dense graph, with \(435.591\) ms. At the same time, it required the largest memory usage, which demonstrates the trade-off introduced by the optimization. The overall MST performance is presented in Figure~\ref{fig:lab5-main}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.88\textwidth]{../../Lab5/plots/mst_performance.png}
-    \caption{Overall MST performance}
+    \caption{Figure 2.1 -- Overall MST performance}
     \label{fig:lab5-main}
 \end{figure}
 
-Figure~\ref{fig:lab5-main} shows the strong increase in execution time as the number of nodes grows. The growth is especially visible for the classic Prim variant.
+According to Figure~\ref{fig:lab5-main}, the strong increase in execution time as the number of nodes grows is clearly visible. The growth is especially pronounced for the classic Prim variant.
 
 \reportlabel{Conclusion}
 
@@ -130,29 +130,29 @@ Kruskal(graph):
 
 \reportlabel{Implementation}
 
-The optimized version uses faster component management through union-find operations. This reduces both running time and memory compared with the simpler component-merging approach of the classic version.
+The optimized version uses faster component management through union-find operations. This generally improves running time and may also reduce memory compared with the simpler component-merging approach of the classic version.
 
 \reportlabel{Results}
 
-After the execution of Kruskal on sparse, medium, and dense graphs, the representative values for the largest sparse graph are shown in Table~\ref{tab:lab5-sparse}.
+After the execution of Kruskal on sparse, medium, and dense graphs, the representative values for the largest sparse graph are presented in Table~\ref{tab:lab5-sparse}.
 
 \begin{table}[H]
-    \caption{MST benchmark on sparse graphs at 700 nodes}
+    \caption{Table 2.2 -- MST benchmark on sparse graphs at 700 nodes}
     \label{tab:lab5-sparse}
     \centering
     {\fontsize{11}{11}\selectfont\renewcommand{\arraystretch}{1}\input{generated/lab5_sparse_table.tex}}
 \end{table}
 
-In Table~\ref{tab:lab5-sparse} it can be observed that the optimized Kruskal variant improved both execution time and memory usage compared with the classic implementation. On the sparse graph with 700 nodes, the optimized version required \(227.098\) ms, while the classic version required \(362.709\) ms. The influence of graph type is represented in Figure~\ref{fig:lab5-type}.
+According to Table~\ref{tab:lab5-sparse}, the optimized Kruskal variant improved both execution time and memory usage compared with the classic implementation. On the sparse graph with 700 nodes, the optimized version required \(227.098\) ms, while the classic version required \(362.709\) ms. The influence of graph type is presented in Figure~\ref{fig:lab5-type}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.88\textwidth]{../../Lab5/plots/mst_by_graph_type.png}
-    \caption{MST performance by graph type}
+    \caption{Figure 2.2 -- MST performance by graph type}
     \label{fig:lab5-type}
 \end{figure}
 
-Figure~\ref{fig:lab5-type} shows how graph density influences all tested algorithms. Dense graphs systematically lead to higher running times because they contain many more candidate edges to inspect.
+According to Figure~\ref{fig:lab5-type}, graph density influences all tested algorithms systematically. Dense graphs lead to higher running times because they contain many more candidate edges to inspect.
 
 \reportlabel{Conclusion}
 
@@ -165,16 +165,16 @@ Among the tested variants, the optimized Prim implementation achieved the best o
 
 \reportreferences{
 \bibitem{gfg-greedy}
-GeeksforGeeks. \textit{Greedy Algorithms} [online]. [cited 07.05.2026]. Available: \href{https://www.geeksforgeeks.org/greedy-algorithms/}{geeksforgeeks.org/greedy-algorithms}.
+GeeksforGeeks. \textit{Greedy Algorithms} [online]. [cited 07.05.2026]. Available: \url{https://www.geeksforgeeks.org/greedy-algorithms/}.
 
 \bibitem{tp-greedy}
-TutorialsPoint. \textit{Greedy Algorithms} [online]. [cited 07.05.2026]. Available: \href{https://www.tutorialspoint.com/data_structures_algorithms/greedy_algorithms.htm}{tutorialspoint.com/data\_structures\_algorithms/greedy\_algorithms.htm}.
+TutorialsPoint. \textit{Greedy Algorithms} [online]. [cited 07.05.2026]. Available: \url{https://www.tutorialspoint.com/data_structures_algorithms/greedy_algorithms.htm}.
 
 \bibitem{scaler}
-Scaler. \textit{Prim's and Kruskal's Algorithm} [online]. [cited 07.05.2026]. Available: \href{https://www.scaler.com/topics/prims-and-kruskal-algorithm/}{scaler.com/topics/prims-and-kruskal-algorithm}.
+Scaler. \textit{Prim's and Kruskal's Algorithm} [online]. [cited 07.05.2026]. Available: \url{https://www.scaler.com/topics/prims-and-kruskal-algorithm/}.
 
 \bibitem{repo}
-GitHub Repository. \textit{Lab 5 source folder} [online]. [cited 07.05.2026]. Available: \href{https://github.com/Prince-of-Nothing/aa-course-repo/tree/main/Lab5}{github.com/Prince-of-Nothing/aa-course-repo/tree/main/Lab5}.
+Ple\c{s}u D. \textit{aa-course-repo, Lab 5 source folder} [online]. GitHub, 2026. [cited 07.05.2026]. Available: \url{https://github.com/Prince-of-Nothing/aa-course-repo/tree/main/Lab5}.
 }
 
 \end{document}
