@@ -55,7 +55,7 @@
 \usepackage{listings}
 \usepackage{tocloft}
 
-\setlist[itemize]{label=--,leftmargin=1.25cm,itemsep=0pt,topsep=0pt}
+\setlist[itemize]{label=\textendash,leftmargin=1.25cm,itemsep=0pt,topsep=0pt}
 \setlist[enumerate]{leftmargin=1.25cm,itemsep=0pt,topsep=0pt}
 
 \renewcommand{\cftsecleader}{\cftdotfill{1}}
@@ -74,8 +74,8 @@
 \renewcommand{\cftsubsecfont}{\normalfont}
 \renewcommand{\cftsecpagefont}{\bfseries}
 \renewcommand{\cftsubsecpagefont}{\normalfont}
-\renewcommand{\cfttoctitlefont}{\hfill\normalfont\Large\bfseries}
-\renewcommand{\cftaftertoctitle}{\hfill}
+\renewcommand{\cfttoctitlefont}{\normalfont\Large\bfseries}
+\renewcommand{\cftaftertoctitle}{\mbox{}}
 \setcounter{tocdepth}{2}
 
 \usepackage{hyperref}
@@ -84,8 +84,8 @@
     hidelinks,
     linktoc=all
 }
-\addto\captionsenglish{\renewcommand{\contentsname}{TABLE OF CONTENTS}}
-\renewcommand{\contentsname}{TABLE OF CONTENTS}
+\addto\captionsenglish{\renewcommand{\contentsname}{\centerline{TABLE OF CONTENTS}}}
+\renewcommand{\contentsname}{\centerline{TABLE OF CONTENTS}}
 
 \counterwithin{figure}{section}
 \counterwithin{table}{section}
@@ -113,9 +113,9 @@
     singlelinecheck=false
 }
 \captionsetup[table]{
-    font=normalfont,
-    labelfont=normalfont,
-    textfont=normalfont,
+    font=bf,
+    labelfont=bf,
+    textfont=bf,
     labelsep=endash,
     justification=raggedleft,
     singlelinecheck=false,
@@ -220,7 +220,10 @@
     \section*{REFERENCES}
     \phantomsection
     \addcontentsline{toc}{section}{REFERENCES}
+    \begingroup
+    \renewcommand{\section}[2]{}% suppress thebibliography's internal \section*{\refname}
     \begin{thebibliography}{99}
     #1
     \end{thebibliography}
+    \endgroup
 }

@@ -1,9 +1,22 @@
 \babel@toc {english}{}\relax 
-\contentsline {section}{LIST OF ABBREVIATIONS AND DEFINITIONS}{3}{section*.1}%
-\contentsline {section}{INTRODUCTION}{4}{section*.2}%
-\contentsline {section}{\numberline {1}ALGORITHM ANALYSIS}{5}{section.1}%
+\contentsline {section}{INTRODUCTION}{3}{section*.1}%
+\contentsline {section}{\numberline {1}ALGORITHM ANALYSIS}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Objective}{4}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Tasks}{4}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Theoretical Notes}{4}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Comparison Metric}{5}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}Input Format}{6}{subsection.1.5}%
 \contentsline {section}{\numberline {2}IMPLEMENTATION}{7}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Dijkstra}{7}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Floyd--Warshall}{8}{subsection.2.2}%
-\contentsline {section}{CONCLUSION}{11}{section*.7}%
-\contentsline {section}{REFERENCES}{12}{section*.8}%
+\contentsline {subsubsection}{\numberline {2.1.1}Algorithm Description}{7}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Implementation}{7}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.3}Results}{8}{subsubsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.4}Conclusion}{8}{subsubsection.2.1.4}%
+\contentsline {subsection}{\numberline {2.2}Floyd--Warshall}{9}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Algorithm Description}{9}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Implementation}{9}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}Results}{9}{subsubsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.4}Conclusion}{10}{subsubsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.3}Comparative Analysis}{11}{subsection.2.3}%
+\contentsline {section}{CONCLUSION}{14}{section*.10}%
+\contentsline {section}{REFERENCES}{15}{section*.11}%

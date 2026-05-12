@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.5)  7 MAY 2026 11:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.5)  12 MAY 2026 10:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -734,7 +734,7 @@ known/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}]
 \openout3 = `lab4_report.toc'.
 
  [2] [3] [4] [5] [6]
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 72
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 74
 .
 
 (C:\Users\Unknown\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1pcr.fd
@@ -748,72 +748,109 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8.14006> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6.60007> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
-)
-<../../Lab4/plots/dijkstra_sparse_dense_performance.png, id=70, 722.7pt x 433.6
-2pt>
+) [7]
+<../../Lab4/plots/dijkstra_sparse_dense_performance.png, id=141, 722.7pt x 433.
+62pt>
 File: ../../Lab4/plots/dijkstra_sparse_dense_performance.png Graphic file (type
  png)
 <use ../../Lab4/plots/dijkstra_sparse_dense_performance.png>
 Package pdftex.def Info: ../../Lab4/plots/dijkstra_sparse_dense_performance.png
-  used on input line 101.
+  used on input line 140.
 (pdftex.def)             Requested size: 450.69417pt x 270.41635pt.
- [7] [8 <../../Lab4/plots/dijkstra_sparse_dense_performance.png>] (generated/la
-b4_floyd_table.tex)
-<../../Lab4/plots/floyd_warshall_sparse_dense_performance.png, id=107, 722.7pt 
+ [8 <../../Lab4/plots/dijkstra_sparse_dense_performance.png>] (generated/lab4_f
+loyd_table.tex) [9]
+<../../Lab4/plots/floyd_warshall_sparse_dense_performance.png, id=197, 722.7pt 
 x 433.62pt>
 File: ../../Lab4/plots/floyd_warshall_sparse_dense_performance.png Graphic file
  (type png)
 <use ../../Lab4/plots/floyd_warshall_sparse_dense_performance.png>
 Package pdftex.def Info: ../../Lab4/plots/floyd_warshall_sparse_dense_performan
-ce.png  used on input line 148.
+ce.png  used on input line 214.
 (pdftex.def)             Requested size: 450.69417pt x 270.41635pt.
- [9 <../../Lab4/plots/floyd_warshall_sparse_dense_performance.png>] [10] [11]
-Underfull \hbox (badness 8075) in paragraph at lines 176--176
+ [10 <../../Lab4/plots/floyd_warshall_sparse_dense_performance.png>]
+<../../Lab4/plots/dijkstra_performance.png, id=206, 722.7pt x 433.62pt>
+File: ../../Lab4/plots/dijkstra_performance.png Graphic file (type png)
+<use ../../Lab4/plots/dijkstra_performance.png>
+Package pdftex.def Info: ../../Lab4/plots/dijkstra_performance.png  used on inp
+ut line 233.
+(pdftex.def)             Requested size: 450.69417pt x 270.41635pt.
+<../../Lab4/plots/floyd_warshall_by_graph_type.png, id=208, 794.97pt x 433.62pt
+>
+File: ../../Lab4/plots/floyd_warshall_by_graph_type.png Graphic file (type png)
+
+<use ../../Lab4/plots/floyd_warshall_by_graph_type.png>
+Package pdftex.def Info: ../../Lab4/plots/floyd_warshall_by_graph_type.png  use
+d on input line 242.
+(pdftex.def)             Requested size: 450.69417pt x 245.83604pt.
+ [11 <../../Lab4/plots/dijkstra_performance.png>]
+<../../Lab4/plots/dijkstra_sparse_dense_memory.png, id=217, 722.7pt x 433.62pt>
+
+File: ../../Lab4/plots/dijkstra_sparse_dense_memory.png Graphic file (type png)
+
+<use ../../Lab4/plots/dijkstra_sparse_dense_memory.png>
+Package pdftex.def Info: ../../Lab4/plots/dijkstra_sparse_dense_memory.png  use
+d on input line 251.
+(pdftex.def)             Requested size: 450.69417pt x 270.41635pt.
+<../../Lab4/plots/floyd_warshall_sparse_dense_memory.png, id=219, 722.7pt x 433
+.62pt>
+File: ../../Lab4/plots/floyd_warshall_sparse_dense_memory.png Graphic file (typ
+e png)
+<use ../../Lab4/plots/floyd_warshall_sparse_dense_memory.png>
+Package pdftex.def Info: ../../Lab4/plots/floyd_warshall_sparse_dense_memory.pn
+g  used on input line 260.
+(pdftex.def)             Requested size: 450.69417pt x 270.41635pt.
+ [12 <../../Lab4/plots/floyd_warshall_by_graph_type.png> <../../Lab4/plots/dijk
+stra_sparse_dense_memory.png>] [13 <../../Lab4/plots/floyd_warshall_sparse_dens
+e_memory.png>] [14]
+Underfull \hbox (badness 8075) in paragraph at lines 284--284
 []\T1/ptm/m/n/12 TutorialsPoint. \T1/ptm/m/it/12 Dy-namic Pro-gram-ming \T1/ptm
 /m/n/12 [on-line]. [cited 07.05.2026]. Avail-able: []$\T1/pcr/m/n/12 https :
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 176--176
+Underfull \hbox (badness 10000) in paragraph at lines 284--284
 \T1/pcr/m/n/12 / / www . tutorialspoint . com / data _ structures _ algorithms 
 / dynamic _
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 176--176
+Underfull \hbox (badness 10000) in paragraph at lines 284--284
 []\T1/ptm/m/n/12 Coding Nin-jas. \T1/ptm/m/it/12 Di-jk-stra's Al-go-rithm vs Fl
 oyd--Warshall's Al-go-rithm \T1/ptm/m/n/12 [on-line]. [cited
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 176--176
+Underfull \hbox (badness 10000) in paragraph at lines 284--284
 \T1/ptm/m/n/12 07.05.2026]. Avail-able: []$\T1/pcr/m/n/12 https : / / www . cod
 ingninjas . com / codestudio / library /
  []
 
-[12] (lab4_report.aux)
+[15] (lab4_report.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 16367 strings out of 467870
- 261658 string characters out of 5417388
- 749154 words of memory out of 5000000
- 44954 multiletter control sequences out of 15000+600000
- 674235 words of font info for 105 fonts, out of 8000000 for 9000
+ 16492 strings out of 467870
+ 264598 string characters out of 5417388
+ 1008421 words of memory out of 5000000
+ 44994 multiletter control sequences out of 15000+600000
+ 676365 words of font info for 110 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 80i,8n,88p,521b,1061s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 80i,8n,88p,1052b,1063s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
-m/cmmi10.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fonts/type1/urw/co
-urier/ucrr8a.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fonts/type1/ur
-w/times/utmb8a.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fonts/type1/
-urw/times/utmr8a.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fonts/type
-1/urw/times/utmri8a.pfb>
-Output written on lab4_report.pdf (12 pages, 301048 bytes).
+m/cmmi10.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fonts/type1/public
+/amsfonts/cm/cmr10.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fonts/ty
+pe1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKT
+eX/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/Unknown/AppData/Local/Programs/
+MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/Unknown/AppData/Local/Programs
+/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Unknown/AppData/Local/Progra
+ms/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Unknown/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
+Output written on lab4_report.pdf (15 pages, 627349 bytes).
 PDF statistics:
- 198 PDF objects out of 1000 (max. 8388607)
- 51 named destinations out of 1000 (max. 500000)
- 75 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 353 PDF objects out of 1000 (max. 8388607)
+ 131 named destinations out of 1000 (max. 500000)
+ 135 words of extra memory for PDF output out of 10000 (max. 10000000)
 

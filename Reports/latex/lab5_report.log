@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.5)  7 MAY 2026 11:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.5)  12 MAY 2026 10:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -733,14 +733,14 @@ known/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}]
 \tf@toc=\write3
 \openout3 = `lab5_report.toc'.
 
- [2] [3] [4] [5]
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 71
+ [2] [3] [4]
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 42
 .
 
 (C:\Users\Unknown\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
-(generated/lab5_dense_table.tex
+[5] [6] (generated/lab5_dense_table.tex
 LaTeX Font Info:    Calculating math sizes for size <11> on input line 1.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <11> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
@@ -748,58 +748,75 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8.14006> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6.60007> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
-)
-<../../Lab5/plots/mst_performance.png, id=66, 722.7pt x 433.62pt>
+) [7]
+<../../Lab5/plots/mst_performance.png, id=142, 722.7pt x 433.62pt>
 File: ../../Lab5/plots/mst_performance.png Graphic file (type png)
 <use ../../Lab5/plots/mst_performance.png>
 Package pdftex.def Info: ../../Lab5/plots/mst_performance.png  used on input li
-ne 102.
+ne 142.
 (pdftex.def)             Requested size: 450.69417pt x 270.41635pt.
- [6] [7 <../../Lab5/plots/mst_performance.png>] (generated/lab5_sparse_table.te
+ [8 <../../Lab5/plots/mst_performance.png>] [9] (generated/lab5_sparse_table.te
 x)
-<../../Lab5/plots/mst_by_graph_type.png, id=106, 794.97pt x 433.62pt>
+<../../Lab5/plots/mst_by_graph_type.png, id=206, 794.97pt x 433.62pt>
 File: ../../Lab5/plots/mst_by_graph_type.png Graphic file (type png)
 <use ../../Lab5/plots/mst_by_graph_type.png>
 Package pdftex.def Info: ../../Lab5/plots/mst_by_graph_type.png  used on input 
-line 150.
+line 229.
 (pdftex.def)             Requested size: 450.69417pt x 245.83604pt.
- [8 <../../Lab5/plots/mst_by_graph_type.png>] [9] [10]
-Underfull \hbox (badness 1418) in paragraph at lines 178--178
+ [10 <../../Lab5/plots/mst_by_graph_type.png>]
+<../../Lab5/plots/mst_memory.png, id=220, 722.7pt x 433.62pt>
+File: ../../Lab5/plots/mst_memory.png Graphic file (type png)
+<use ../../Lab5/plots/mst_memory.png>
+Package pdftex.def Info: ../../Lab5/plots/mst_memory.png  used on input line 25
+0.
+(pdftex.def)             Requested size: 450.69417pt x 270.41635pt.
+<../../Lab5/plots/mst_memory_by_graph_type.png, id=222, 794.97pt x 433.62pt>
+File: ../../Lab5/plots/mst_memory_by_graph_type.png Graphic file (type png)
+<use ../../Lab5/plots/mst_memory_by_graph_type.png>
+Package pdftex.def Info: ../../Lab5/plots/mst_memory_by_graph_type.png  used on
+ input line 259.
+(pdftex.def)             Requested size: 450.69417pt x 245.83604pt.
+ [11 <../../Lab5/plots/mst_memory.png>] [12 <../../Lab5/plots/mst_memory_by_gra
+ph_type.png>] [13]
+Underfull \hbox (badness 1418) in paragraph at lines 283--283
 []\T1/ptm/m/n/12 GeeksforGeeks. \T1/ptm/m/it/12 Greedy Al-go-rithms \T1/ptm/m/n
 /12 [on-line]. [cited 07.05.2026]. Avail-able: []$\T1/pcr/m/n/12 https : / / ww
 w .
  []
 
 
-Underfull \hbox (badness 2253) in paragraph at lines 178--178
+Underfull \hbox (badness 2253) in paragraph at lines 283--283
 []\T1/ptm/m/n/12 TutorialsPoint. \T1/ptm/m/it/12 Greedy Al-go-rithms \T1/ptm/m/
 n/12 [on-line]. [cited 07.05.2026]. Avail-able: []$\T1/pcr/m/n/12 https : / / w
 ww .
  []
 
-[11] (lab5_report.aux)
+[14] (lab5_report.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 16369 strings out of 467870
- 261418 string characters out of 5417388
- 766113 words of memory out of 5000000
- 44954 multiletter control sequences out of 15000+600000
- 674235 words of font info for 105 fonts, out of 8000000 for 9000
+ 16489 strings out of 467870
+ 263547 string characters out of 5417388
+ 1028217 words of memory out of 5000000
+ 44979 multiletter control sequences out of 15000+600000
+ 678009 words of font info for 111 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 80i,8n,88p,521b,1061s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 80i,8n,88p,1030b,1959s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
-m/cmmi10.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fonts/type1/urw/co
-urier/ucrr8a.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fonts/type1/ur
-w/times/utmb8a.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fonts/type1/
-urw/times/utmr8a.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fonts/type
-1/urw/times/utmri8a.pfb>
-Output written on lab5_report.pdf (11 pages, 237672 bytes).
+m/cmmi10.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fonts/type1/public
+/amsfonts/cm/cmr10.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fonts/ty
+pe1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKT
+eX/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/Unknown/AppData/Local/Programs/
+MiKTeX/fonts/type1/urw/symbol/usyr.pfb><C:/Users/Unknown/AppData/Local/Programs
+/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Unknown/AppData/Local/Progra
+ms/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Unknown/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
+Output written on lab5_report.pdf (14 pages, 435933 bytes).
 PDF statistics:
- 196 PDF objects out of 1000 (max. 8388607)
- 53 named destinations out of 1000 (max. 500000)
- 75 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 356 PDF objects out of 1000 (max. 8388607)
+ 143 named destinations out of 1000 (max. 500000)
+ 125 words of extra memory for PDF output out of 10000 (max. 10000000)
 

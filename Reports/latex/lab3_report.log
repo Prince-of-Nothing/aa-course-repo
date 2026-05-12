@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.5)  7 MAY 2026 11:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.5)  12 MAY 2026 10:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -733,14 +733,14 @@ known/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}]
 \tf@toc=\write3
 \openout3 = `lab3_report.toc'.
 
- [2] [3] [4] [5] [6]
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 72
+ [2]
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 14
 .
 
 (C:\Users\Unknown\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
-(generated/lab3_density_table.tex
+[3] [4] [5] [6] [7] (generated/lab3_density_table.tex
 LaTeX Font Info:    Calculating math sizes for size <11> on input line 1.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <11> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
@@ -748,77 +748,111 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8.14006> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6.60007> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
-)
-<../../Lab3/plots/dfs_performance_vs_nodes.png, id=75, 722.7pt x 433.62pt>
+) [8]
+<../../Lab3/plots/dfs_performance_vs_nodes.png, id=146, 722.7pt x 433.62pt>
 File: ../../Lab3/plots/dfs_performance_vs_nodes.png Graphic file (type png)
 <use ../../Lab3/plots/dfs_performance_vs_nodes.png>
 Package pdftex.def Info: ../../Lab3/plots/dfs_performance_vs_nodes.png  used on
- input line 105.
+ input line 155.
 (pdftex.def)             Requested size: 425.08511pt x 255.05283pt.
- [7] [8 <../../Lab3/plots/dfs_performance_vs_nodes.png>] (generated/lab3_topolo
-gy_table.tex)
-<../../Lab3/plots/bfs_performance_vs_nodes.png, id=116, 722.7pt x 433.62pt>
+ [9 <../../Lab3/plots/dfs_performance_vs_nodes.png>] [10] (generated/lab3_topol
+ogy_table.tex)
+<../../Lab3/plots/bfs_performance_vs_nodes.png, id=177, 722.7pt x 433.62pt>
 File: ../../Lab3/plots/bfs_performance_vs_nodes.png Graphic file (type png)
 <use ../../Lab3/plots/bfs_performance_vs_nodes.png>
 Package pdftex.def Info: ../../Lab3/plots/bfs_performance_vs_nodes.png  used on
- input line 154.
+ input line 240.
 (pdftex.def)             Requested size: 425.08511pt x 255.05283pt.
-<../../Lab3/plots/comprehensive_analysis.png, id=118, 1148.1294pt x 852.786pt>
+
+[11]
+<../../Lab3/plots/performance_by_graph_type.png, id=213, 867.24pt x 433.62pt>
+File: ../../Lab3/plots/performance_by_graph_type.png Graphic file (type png)
+<use ../../Lab3/plots/performance_by_graph_type.png>
+Package pdftex.def Info: ../../Lab3/plots/performance_by_graph_type.png  used o
+n input line 251.
+(pdftex.def)             Requested size: 450.69417pt x 225.35136pt.
+ [12 <../../Lab3/plots/bfs_performance_vs_nodes.png> <../../Lab3/plots/performa
+nce_by_graph_type.png>]
+<../../Lab3/plots/dfs_vs_bfs_performance_nodes.png, id=223, 722.7pt x 433.62pt>
+
+File: ../../Lab3/plots/dfs_vs_bfs_performance_nodes.png Graphic file (type png)
+
+<use ../../Lab3/plots/dfs_vs_bfs_performance_nodes.png>
+Package pdftex.def Info: ../../Lab3/plots/dfs_vs_bfs_performance_nodes.png  use
+d on input line 272.
+(pdftex.def)             Requested size: 450.69417pt x 270.41635pt.
+ [13 <../../Lab3/plots/dfs_vs_bfs_performance_nodes.png>]
+<../../Lab3/plots/dfs_vs_bfs_performance_edges.png, id=235, 722.7pt x 433.62pt>
+
+File: ../../Lab3/plots/dfs_vs_bfs_performance_edges.png Graphic file (type png)
+
+<use ../../Lab3/plots/dfs_vs_bfs_performance_edges.png>
+Package pdftex.def Info: ../../Lab3/plots/dfs_vs_bfs_performance_edges.png  use
+d on input line 283.
+(pdftex.def)             Requested size: 450.69417pt x 270.41635pt.
+<../../Lab3/plots/memory_usage_comparison.png, id=238, 722.7pt x 433.62pt>
+File: ../../Lab3/plots/memory_usage_comparison.png Graphic file (type png)
+<use ../../Lab3/plots/memory_usage_comparison.png>
+Package pdftex.def Info: ../../Lab3/plots/memory_usage_comparison.png  used on 
+input line 294.
+(pdftex.def)             Requested size: 450.69417pt x 270.41635pt.
+ [14 <../../Lab3/plots/dfs_vs_bfs_performance_edges.png>]
+<../../Lab3/plots/comprehensive_analysis.png, id=248, 1148.1294pt x 852.786pt>
 File: ../../Lab3/plots/comprehensive_analysis.png Graphic file (type png)
 <use ../../Lab3/plots/comprehensive_analysis.png>
 Package pdftex.def Info: ../../Lab3/plots/comprehensive_analysis.png  used on i
-nput line 163.
+nput line 305.
 (pdftex.def)             Requested size: 460.93153pt x 342.35754pt.
- [9 <../../Lab3/plots/bfs_performance_vs_nodes.png>] [10 <../../Lab3/plots/comp
-rehensive_analysis.png>]
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 191--191
+ [15 <../../Lab3/plots/memory_usage_comparison.png>] [16 <../../Lab3/plots/comp
+rehensive_analysis.png>] [17]
+Underfull \hbox (badness 10000) in paragraph at lines 334--334
 []\T1/ptm/m/n/12 GeeksforGeeks. \T1/ptm/m/it/12 Breadth First Search or BFS for
  a Graph \T1/ptm/m/n/12 [on-line].
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 191--191
+Underfull \hbox (badness 10000) in paragraph at lines 334--334
 \T1/ptm/m/n/12 [cited 07.05.2026]. Avail-able: []$\T1/pcr/m/n/12 https : / / ww
 w . geeksforgeeks . org /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 191--191
+Underfull \hbox (badness 10000) in paragraph at lines 334--334
 []\T1/ptm/m/n/12 GeeksforGeeks. \T1/ptm/m/it/12 Depth First Search or DFS for a
  Graph \T1/ptm/m/n/12 [on-line].
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 191--191
+Underfull \hbox (badness 10000) in paragraph at lines 334--334
 \T1/ptm/m/n/12 [cited 07.05.2026]. Avail-able: []$\T1/pcr/m/n/12 https : / / ww
 w . geeksforgeeks . org /
  []
 
-[12] (lab3_report.aux)
+[18] (lab3_report.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 16380 strings out of 467870
- 261941 string characters out of 5417388
- 760224 words of memory out of 5000000
- 44962 multiletter control sequences out of 15000+600000
- 674235 words of font info for 105 fonts, out of 8000000 for 9000
+ 16510 strings out of 467870
+ 264846 string characters out of 5417388
+ 870538 words of memory out of 5000000
+ 45003 multiletter control sequences out of 15000+600000
+ 680295 words of font info for 116 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 80i,8n,88p,521b,1063s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 80i,8n,88p,1027b,1957s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
 m/cmmi10.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fonts/type1/public
 /amsfonts/cm/cmr10.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fonts/ty
-pe1/urw/courier/ucrr8a.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKTeX/font
-s/type1/urw/times/utmb8a.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKTeX/fo
-nts/type1/urw/times/utmr8a.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKTeX/
-fonts/type1/urw/times/utmri8a.pfb>
-Output written on lab3_report.pdf (12 pages, 493871 bytes).
+pe1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Unknown/AppData/Local/Programs/MiKT
+eX/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/Unknown/AppData/Local/Programs/
+MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/Unknown/AppData/Local/Program
+s/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/Unknown/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
+Output written on lab3_report.pdf (18 pages, 840769 bytes).
 PDF statistics:
- 213 PDF objects out of 1000 (max. 8388607)
- 56 named destinations out of 1000 (max. 500000)
- 80 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 375 PDF objects out of 1000 (max. 8388607)
+ 135 named destinations out of 1000 (max. 500000)
+ 140 words of extra memory for PDF output out of 10000 (max. 10000000)
 
